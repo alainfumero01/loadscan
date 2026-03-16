@@ -1,0 +1,933 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>LoadScan — Appliance Load Tracking</title>
+  <meta name="description" content="LoadScan helps appliance resellers scan, track, and price their loads with AI-powered manifests." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet" />
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --blue:        #2550DB;
+      --blue-light:  #4A6EE8;
+      --blue-glow:   rgba(37, 80, 219, 0.18);
+      --navy:        #0B1235;
+      --navy-mid:    #111B47;
+      --white:       #FFFFFF;
+      --off-white:   #F6F8FD;
+      --text:        #111827;
+      --text-muted:  #6B7280;
+      --text-faint:  #9CA3AF;
+      --border:      #E5E9F4;
+      --border-dark: rgba(255,255,255,0.08);
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 16px;
+      line-height: 1.6;
+      color: var(--text);
+      background: var(--white);
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ─── NAV ─── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      background: rgba(11, 18, 53, 0.92);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border-dark);
+    }
+
+    .nav-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 32px;
+      height: 60px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .nav-logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      text-decoration: none;
+    }
+
+    .nav-logo-icon {
+      width: 32px;
+      height: 32px;
+      background: var(--blue);
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .nav-logo-icon svg { width: 18px; height: 18px; }
+
+    .nav-logo-text {
+      font-family: 'Syne', sans-serif;
+      font-weight: 700;
+      font-size: 17px;
+      color: var(--white);
+      letter-spacing: -0.02em;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 28px;
+      list-style: none;
+    }
+
+    .nav-links a {
+      font-size: 13.5px;
+      font-weight: 400;
+      color: rgba(255,255,255,0.65);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .nav-links a:hover { color: var(--white); }
+
+    /* ─── HERO ─── */
+    .hero {
+      background: var(--navy);
+      padding: 140px 32px 100px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: -120px; left: 50%;
+      transform: translateX(-30%);
+      width: 700px; height: 700px;
+      background: radial-gradient(circle, rgba(37, 80, 219, 0.22) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .hero::after {
+      content: '';
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(37,80,219,0.4), transparent);
+    }
+
+    /* Grid lines */
+    .hero-grid {
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(255,255,255,0.025) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.025) 1px, transparent 1px);
+      background-size: 60px 60px;
+      pointer-events: none;
+    }
+
+    .hero-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      position: relative;
+      z-index: 1;
+    }
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      background: rgba(37, 80, 219, 0.15);
+      border: 1px solid rgba(37, 80, 219, 0.35);
+      border-radius: 100px;
+      padding: 5px 14px 5px 8px;
+      margin-bottom: 32px;
+      animation: fadeUp 0.6s ease both;
+    }
+
+    .hero-badge-dot {
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      background: var(--blue-light);
+      box-shadow: 0 0 6px var(--blue-light);
+    }
+
+    .hero-badge span {
+      font-size: 12px;
+      font-weight: 500;
+      color: rgba(255,255,255,0.7);
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+
+    .hero h1 {
+      font-family: 'Syne', sans-serif;
+      font-weight: 800;
+      font-size: clamp(42px, 6vw, 76px);
+      line-height: 1.0;
+      letter-spacing: -0.03em;
+      color: var(--white);
+      margin-bottom: 24px;
+      animation: fadeUp 0.6s 0.1s ease both;
+    }
+
+    .hero h1 em {
+      font-style: normal;
+      color: var(--blue-light);
+    }
+
+    .hero-sub {
+      font-size: 18px;
+      font-weight: 300;
+      color: rgba(255,255,255,0.55);
+      max-width: 520px;
+      line-height: 1.65;
+      margin-bottom: 44px;
+      animation: fadeUp 0.6s 0.2s ease both;
+    }
+
+    .hero-cta {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      flex-wrap: wrap;
+      animation: fadeUp 0.6s 0.3s ease both;
+    }
+
+    .btn-appstore {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      background: var(--white);
+      color: var(--navy);
+      text-decoration: none;
+      padding: 13px 22px;
+      border-radius: 12px;
+      font-family: 'Syne', sans-serif;
+      font-weight: 700;
+      font-size: 14px;
+      transition: transform 0.2s, box-shadow 0.2s;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.3);
+    }
+
+    .btn-appstore:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 32px rgba(0,0,0,0.4);
+    }
+
+    .btn-appstore svg { width: 20px; height: 20px; }
+
+    .btn-ghost {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      color: rgba(255,255,255,0.6);
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: 400;
+      transition: color 0.2s;
+    }
+
+    .btn-ghost:hover { color: var(--white); }
+
+    /* ─── FEATURES ─── */
+    .features {
+      background: var(--off-white);
+      padding: 88px 32px;
+      border-top: 1px solid var(--border);
+    }
+
+    .section-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    .section-label {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--blue);
+      margin-bottom: 12px;
+    }
+
+    .section-title {
+      font-family: 'Syne', sans-serif;
+      font-weight: 700;
+      font-size: clamp(28px, 3.5vw, 42px);
+      letter-spacing: -0.03em;
+      color: var(--text);
+      line-height: 1.1;
+      margin-bottom: 56px;
+    }
+
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+    }
+
+    @media (max-width: 768px) {
+      .features-grid { grid-template-columns: 1fr; }
+      .nav-links { display: none; }
+    }
+
+    .feature-card {
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 28px;
+      transition: box-shadow 0.25s, transform 0.25s;
+    }
+
+    .feature-card:hover {
+      box-shadow: 0 8px 32px rgba(37,80,219,0.08);
+      transform: translateY(-3px);
+    }
+
+    .feature-icon {
+      width: 44px; height: 44px;
+      background: var(--blue-glow);
+      border-radius: 11px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 16px;
+    }
+
+    .feature-icon svg { width: 22px; height: 22px; color: var(--blue); }
+
+    .feature-card h3 {
+      font-family: 'Syne', sans-serif;
+      font-weight: 700;
+      font-size: 16px;
+      color: var(--text);
+      margin-bottom: 8px;
+      letter-spacing: -0.02em;
+    }
+
+    .feature-card p {
+      font-size: 14px;
+      color: var(--text-muted);
+      line-height: 1.6;
+    }
+
+    /* ─── POLICY SECTIONS ─── */
+    .policy-nav {
+      background: var(--white);
+      border-bottom: 1px solid var(--border);
+      padding: 0 32px;
+      position: sticky;
+      top: 60px;
+      z-index: 50;
+    }
+
+    .policy-nav-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      display: flex;
+      gap: 0;
+    }
+
+    .policy-tab {
+      padding: 16px 24px;
+      font-size: 13.5px;
+      font-weight: 500;
+      color: var(--text-muted);
+      text-decoration: none;
+      border-bottom: 2px solid transparent;
+      transition: color 0.2s, border-color 0.2s;
+      white-space: nowrap;
+    }
+
+    .policy-tab:hover {
+      color: var(--text);
+      border-bottom-color: var(--border);
+    }
+
+    .policy-tab.active {
+      color: var(--blue);
+      border-bottom-color: var(--blue);
+    }
+
+    .policy-section {
+      padding: 72px 32px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .policy-section:nth-child(even) { background: var(--off-white); }
+
+    .policy-content {
+      max-width: 760px;
+    }
+
+    .policy-date {
+      font-size: 12px;
+      color: var(--text-faint);
+      margin-bottom: 32px;
+      font-weight: 400;
+    }
+
+    .policy-content h2 {
+      font-family: 'Syne', sans-serif;
+      font-weight: 700;
+      font-size: clamp(26px, 3vw, 36px);
+      letter-spacing: -0.03em;
+      color: var(--text);
+      margin-bottom: 8px;
+    }
+
+    .policy-content h3 {
+      font-family: 'Syne', sans-serif;
+      font-weight: 600;
+      font-size: 17px;
+      color: var(--text);
+      margin: 36px 0 10px;
+      letter-spacing: -0.02em;
+    }
+
+    .policy-content p {
+      font-size: 15px;
+      color: #374151;
+      line-height: 1.75;
+      margin-bottom: 14px;
+    }
+
+    .policy-content ul {
+      margin: 10px 0 18px 20px;
+    }
+
+    .policy-content ul li {
+      font-size: 15px;
+      color: #374151;
+      line-height: 1.75;
+      margin-bottom: 6px;
+    }
+
+    .policy-content a {
+      color: var(--blue);
+      text-decoration: none;
+    }
+
+    .policy-content a:hover { text-decoration: underline; }
+
+    /* ─── SUPPORT ─── */
+    .support-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 20px;
+      margin-top: 36px;
+    }
+
+    @media (max-width: 640px) { .support-grid { grid-template-columns: 1fr; } }
+
+    .support-card {
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 24px;
+    }
+
+    .support-card h3 {
+      font-family: 'Syne', sans-serif;
+      font-weight: 700;
+      font-size: 15px;
+      color: var(--text);
+      margin-bottom: 6px;
+    }
+
+    .support-card p {
+      font-size: 14px;
+      color: var(--text-muted);
+      margin-bottom: 14px;
+    }
+
+    .support-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--blue);
+      text-decoration: none;
+      transition: gap 0.2s;
+    }
+
+    .support-link:hover { gap: 9px; }
+
+    /* ─── FOOTER ─── */
+    footer {
+      background: var(--navy);
+      padding: 48px 32px;
+    }
+
+    .footer-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+
+    .footer-logo {
+      font-family: 'Syne', sans-serif;
+      font-weight: 700;
+      font-size: 16px;
+      color: var(--white);
+      letter-spacing: -0.02em;
+    }
+
+    .footer-links {
+      display: flex;
+      gap: 24px;
+      list-style: none;
+    }
+
+    .footer-links a {
+      font-size: 13px;
+      color: rgba(255,255,255,0.4);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .footer-links a:hover { color: rgba(255,255,255,0.8); }
+
+    .footer-copy {
+      font-size: 12px;
+      color: rgba(255,255,255,0.25);
+      width: 100%;
+    }
+
+    /* ─── ANIMATIONS ─── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+
+    .reveal.visible {
+      opacity: 1;
+      transform: none;
+    }
+
+    /* ─── DIVIDER ─── */
+    .divider {
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--border), transparent);
+      margin: 0;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <div class="nav-inner">
+      <a href="#" class="nav-logo">
+        <div class="nav-logo-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2"/>
+            <rect x="9" y="3" width="6" height="4" rx="1"/>
+            <path d="M9 12h6M9 16h4"/>
+          </svg>
+        </div>
+        <span class="nav-logo-text">LoadScan</span>
+      </a>
+      <ul class="nav-links">
+        <li><a href="#features">Features</a></li>
+        <li><a href="#privacy">Privacy</a></li>
+        <li><a href="#terms">Terms</a></li>
+        <li><a href="#support">Support</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-grid"></div>
+    <div class="hero-inner">
+      <div class="hero-badge">
+        <div class="hero-badge-dot"></div>
+        <span>iOS App — Available on the App Store</span>
+      </div>
+      <h1>Load smarter.<br/><em>Sell faster.</em></h1>
+      <p class="hero-sub">
+        LoadScan helps appliance resellers scan sticker labels, build AI-powered manifests, and track every load from acquisition to sale.
+      </p>
+      <div class="hero-cta">
+        <a href="#" class="btn-appstore">
+          <svg viewBox="0 0 24 24" fill="currentColor">
+            <path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/>
+          </svg>
+          Download on App Store
+        </a>
+        <a href="#features" class="btn-ghost">
+          Learn more
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M5 12h14M12 5l7 7-7 7"/>
+          </svg>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- FEATURES -->
+  <section class="features" id="features">
+    <div class="section-inner">
+      <div class="section-label reveal">What LoadScan does</div>
+      <div class="section-title reveal">Built for the appliance<br/>resale floor.</div>
+      <div class="features-grid">
+        <div class="feature-card reveal">
+          <div class="feature-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/>
+            </svg>
+          </div>
+          <h3>Manifest Builder</h3>
+          <p>Scan appliance stickers or type model numbers to instantly build detailed load manifests with AI-generated product info and pricing.</p>
+        </div>
+        <div class="feature-card reveal">
+          <div class="feature-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
+            </svg>
+          </div>
+          <h3>AI Product Lookup</h3>
+          <p>Point your camera at any appliance label. LoadScan reads the model number and fetches the product name, category, and market value automatically.</p>
+        </div>
+        <div class="feature-card reveal">
+          <div class="feature-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M12 2v20M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/>
+            </svg>
+          </div>
+          <h3>Smart Pricing</h3>
+          <p>Enter your load cost and target margin — LoadScan distributes prices across every item strategically, so every manifest is profitable from day one.</p>
+        </div>
+        <div class="feature-card reveal">
+          <div class="feature-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M3 3v18h18"/><path d="M18 17V9M13 17V5M8 17v-3"/>
+            </svg>
+          </div>
+          <h3>Inventory Dashboard</h3>
+          <p>See all active loads, total stock value, aging inventory, and profit metrics at a glance — everything you need to make fast buying decisions.</p>
+        </div>
+        <div class="feature-card reveal">
+          <div class="feature-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><path d="M14 2v6h6M16 13H8M16 17H8M10 9H8"/>
+            </svg>
+          </div>
+          <h3>CSV Export</h3>
+          <p>Export any manifest to a clean spreadsheet for marketplace listings, team sharing, or your own records — one tap, ready to send.</p>
+        </div>
+        <div class="feature-card reveal">
+          <div class="feature-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/>
+            </svg>
+          </div>
+          <h3>Team Access</h3>
+          <p>Invite your team with enterprise invite codes. Everyone works off the same manifests and inventory — no spreadsheet chaos.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- POLICY NAV -->
+  <div class="policy-nav">
+    <div class="policy-nav-inner">
+      <a href="#privacy" class="policy-tab">Privacy Policy</a>
+      <a href="#terms" class="policy-tab">Terms of Service</a>
+      <a href="#support" class="policy-tab">Support</a>
+    </div>
+  </div>
+
+  <!-- PRIVACY POLICY -->
+  <section class="policy-section" id="privacy">
+    <div class="section-inner">
+      <div class="policy-content">
+        <div class="section-label">Legal</div>
+        <h2>Privacy Policy</h2>
+        <p class="policy-date">Last updated: March 16, 2026</p>
+
+        <p>LoadScan ("we," "our," or "us") is committed to protecting your privacy. This Privacy Policy explains how we collect, use, disclose, and safeguard your information when you use the LoadScan iOS application and related services.</p>
+
+        <h3>1. Information We Collect</h3>
+        <p>We collect the following types of information:</p>
+        <ul>
+          <li><strong>Account Information:</strong> Email address and name when you create an account or sign in with Apple.</li>
+          <li><strong>Business Data:</strong> Load manifests, product records, pricing data, and inventory information you create within the app.</li>
+          <li><strong>Photos:</strong> Images of appliance labels and stickers you capture within the app for product identification purposes.</li>
+          <li><strong>Device Information:</strong> Device type, operating system version, and app version for diagnostics and support.</li>
+          <li><strong>Usage Data:</strong> Features used, session activity, and error logs to improve the app experience.</li>
+        </ul>
+
+        <h3>2. How We Use Your Information</h3>
+        <p>We use collected information to:</p>
+        <ul>
+          <li>Provide and operate the LoadScan service, including manifest creation and inventory tracking.</li>
+          <li>Process appliance label images through AI to identify product model numbers, names, and pricing.</li>
+          <li>Authenticate your identity and maintain secure access to your account.</li>
+          <li>Sync your data across devices and team members within your organization.</li>
+          <li>Send transactional emails such as account verification, password resets, and security notifications.</li>
+          <li>Improve the app through anonymized usage analytics and error diagnostics.</li>
+          <li>Respond to support requests and resolve technical issues.</li>
+        </ul>
+
+        <h3>3. Third-Party Services</h3>
+        <p>LoadScan uses the following third-party services to operate:</p>
+        <ul>
+          <li><strong>Supabase:</strong> Cloud database and authentication platform that stores your account data and business records. Data is stored on servers in the United States. <a href="https://supabase.com/privacy" target="_blank">Supabase Privacy Policy</a>.</li>
+          <li><strong>OpenAI:</strong> AI service used to identify appliance products from model numbers and sticker images. Images and model numbers are sent to OpenAI for processing and are not used to train OpenAI models. <a href="https://openai.com/policies/privacy-policy" target="_blank">OpenAI Privacy Policy</a>.</li>
+          <li><strong>Apple Sign In:</strong> Optional authentication method. If you use Sign In with Apple, Apple may provide us with your name and email address. <a href="https://www.apple.com/legal/privacy/" target="_blank">Apple Privacy Policy</a>.</li>
+          <li><strong>Apple App Store:</strong> Subscription and payment processing is handled entirely by Apple. We do not store or process payment card information. <a href="https://www.apple.com/legal/privacy/" target="_blank">Apple Privacy Policy</a>.</li>
+        </ul>
+
+        <h3>4. Data Sharing and Disclosure</h3>
+        <p>We do not sell, trade, or rent your personal information to third parties. We may disclose your information only in the following circumstances:</p>
+        <ul>
+          <li><strong>Within your organization:</strong> If you are part of an enterprise team, manifest data may be visible to other members of your organization.</li>
+          <li><strong>Legal requirements:</strong> If required by law, court order, or government request.</li>
+          <li><strong>Business transfers:</strong> In the event of a merger, acquisition, or sale of assets, your information may be transferred as part of that transaction.</li>
+          <li><strong>Protection of rights:</strong> To protect the rights, property, or safety of LoadScan, our users, or the public.</li>
+        </ul>
+
+        <h3>5. Data Retention</h3>
+        <p>We retain your account and business data for as long as your account is active or as needed to provide services. You may request deletion of your account and associated data at any time by contacting us at <a href="mailto:support@load-scan.com">support@load-scan.com</a>. Deleted data is removed from active systems within 30 days, though backup copies may persist for up to 90 days.</p>
+
+        <h3>6. Data Security</h3>
+        <p>We implement industry-standard security measures to protect your information, including encrypted data transmission (TLS), row-level security on database access, and secure token-based authentication. However, no method of electronic transmission or storage is 100% secure, and we cannot guarantee absolute security.</p>
+
+        <h3>7. Children's Privacy</h3>
+        <p>LoadScan is intended for use by businesses and is not directed to children under the age of 13. We do not knowingly collect personal information from children under 13. If you believe we have inadvertently collected such information, please contact us immediately.</p>
+
+        <h3>8. Your Rights</h3>
+        <p>You have the right to:</p>
+        <ul>
+          <li>Access the personal information we hold about you.</li>
+          <li>Request correction of inaccurate data.</li>
+          <li>Request deletion of your account and data.</li>
+          <li>Opt out of non-essential communications.</li>
+          <li>Data portability — export your manifest data via the CSV export feature at any time.</li>
+        </ul>
+        <p>To exercise these rights, contact us at <a href="mailto:support@load-scan.com">support@load-scan.com</a>.</p>
+
+        <h3>9. Changes to This Policy</h3>
+        <p>We may update this Privacy Policy from time to time. We will notify you of significant changes by updating the date at the top of this page and, where appropriate, through in-app notification. Continued use of the app after changes constitutes acceptance of the updated policy.</p>
+
+        <h3>10. Contact Us</h3>
+        <p>For privacy-related questions or requests, contact us at:<br/>
+        <a href="mailto:support@load-scan.com">support@load-scan.com</a><br/>
+        load-scan.com</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- TERMS OF SERVICE -->
+  <section class="policy-section" id="terms">
+    <div class="section-inner">
+      <div class="policy-content">
+        <div class="section-label">Legal</div>
+        <h2>Terms of Service</h2>
+        <p class="policy-date">Last updated: March 16, 2026</p>
+
+        <p>These Terms of Service ("Terms") govern your use of the LoadScan iOS application and related services operated by LoadScan ("we," "us," or "our"). By downloading or using LoadScan, you agree to be bound by these Terms.</p>
+
+        <h3>1. Acceptance of Terms</h3>
+        <p>By creating an account or using LoadScan, you confirm that you are at least 18 years old, have read and understood these Terms, and agree to be bound by them. If you are using LoadScan on behalf of a business, you represent that you have authority to bind that business to these Terms.</p>
+
+        <h3>2. Description of Service</h3>
+        <p>LoadScan is an iOS application that helps appliance resellers create and manage load manifests, scan product labels, look up product information using artificial intelligence, track inventory, and export data. Features may vary based on your subscription plan.</p>
+
+        <h3>3. Account Registration</h3>
+        <p>You must create an account to use LoadScan. You agree to:</p>
+        <ul>
+          <li>Provide accurate and complete registration information.</li>
+          <li>Keep your login credentials secure and confidential.</li>
+          <li>Notify us immediately of any unauthorized access to your account.</li>
+          <li>Be responsible for all activity that occurs under your account.</li>
+        </ul>
+        <p>We reserve the right to terminate accounts that violate these Terms or are found to contain false information.</p>
+
+        <h3>4. Subscriptions and Billing</h3>
+        <p>LoadScan offers both free and paid subscription tiers. Paid subscriptions are processed through the Apple App Store and are subject to Apple's payment terms.</p>
+        <ul>
+          <li>Subscriptions automatically renew unless cancelled at least 24 hours before the end of the current billing period.</li>
+          <li>You may manage and cancel subscriptions through your Apple ID account settings.</li>
+          <li>Refunds are handled by Apple in accordance with their refund policy.</li>
+          <li>Prices may change with reasonable notice provided through the App Store listing.</li>
+          <li>Enterprise features and team access may require a higher-tier subscription.</li>
+        </ul>
+
+        <h3>5. Acceptable Use</h3>
+        <p>You agree to use LoadScan only for lawful business purposes. You must not:</p>
+        <ul>
+          <li>Use the app for any illegal activity or in violation of applicable laws and regulations.</li>
+          <li>Attempt to reverse engineer, decompile, or extract source code from the app.</li>
+          <li>Circumvent or interfere with security measures or access controls.</li>
+          <li>Transmit malicious code, viruses, or harmful data.</li>
+          <li>Use automated means to access the service in a manner that exceeds reasonable usage.</li>
+          <li>Resell or sublicense the service without written permission.</li>
+          <li>Use the AI features to identify non-appliance products in bad faith or to circumvent usage limits.</li>
+        </ul>
+
+        <h3>6. Your Content</h3>
+        <p>You retain ownership of all manifests, product records, photos, and other data you create in LoadScan ("Your Content"). By using LoadScan, you grant us a limited license to store, process, and transmit Your Content solely to provide the service to you.</p>
+        <p>You are responsible for ensuring that Your Content does not infringe on the intellectual property rights or privacy of third parties.</p>
+
+        <h3>7. AI-Generated Information</h3>
+        <p>LoadScan uses artificial intelligence to suggest product names, categories, and estimated market values based on model numbers and label images. This information is provided for reference only and may not always be accurate. You are solely responsible for verifying pricing and product information before using it in any sale or transaction. We make no warranty regarding the accuracy, completeness, or fitness of AI-generated suggestions.</p>
+
+        <h3>8. Intellectual Property</h3>
+        <p>LoadScan and its original content, features, and functionality are owned by LoadScan and protected by applicable intellectual property laws. You may not copy, modify, distribute, or create derivative works from any part of the app without our prior written consent.</p>
+
+        <h3>9. Disclaimer of Warranties</h3>
+        <p>LoadScan is provided "as is" and "as available" without warranties of any kind, either express or implied. We do not warrant that the service will be uninterrupted, error-free, or free of viruses or other harmful components. We disclaim all implied warranties, including merchantability, fitness for a particular purpose, and non-infringement.</p>
+
+        <h3>10. Limitation of Liability</h3>
+        <p>To the maximum extent permitted by law, LoadScan and its officers, employees, and agents shall not be liable for any indirect, incidental, special, consequential, or punitive damages, including loss of profits, data, or business opportunities, arising from your use of or inability to use the service — even if we have been advised of the possibility of such damages. Our total liability to you for any claim shall not exceed the amount you paid us in the 12 months preceding the claim.</p>
+
+        <h3>11. Indemnification</h3>
+        <p>You agree to indemnify and hold harmless LoadScan and its team from any claims, damages, liabilities, and expenses (including reasonable legal fees) arising from your use of the service, violation of these Terms, or infringement of any rights of a third party.</p>
+
+        <h3>12. Termination</h3>
+        <p>We may suspend or terminate your access to LoadScan at any time for violation of these Terms. You may delete your account at any time through the app's Settings. Upon termination, your right to use the service ceases immediately, and we may delete your data in accordance with our Privacy Policy.</p>
+
+        <h3>13. Governing Law</h3>
+        <p>These Terms are governed by and construed in accordance with the laws of the United States. Any disputes arising under these Terms shall be resolved through binding arbitration in accordance with the rules of the American Arbitration Association.</p>
+
+        <h3>14. Changes to Terms</h3>
+        <p>We reserve the right to update these Terms at any time. We will notify users of material changes through in-app notification or email. Continued use of LoadScan after changes constitutes acceptance of the revised Terms.</p>
+
+        <h3>15. Contact</h3>
+        <p>Questions about these Terms? Contact us at:<br/>
+        <a href="mailto:support@load-scan.com">support@load-scan.com</a><br/>
+        load-scan.com</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- SUPPORT -->
+  <section class="policy-section" id="support">
+    <div class="section-inner">
+      <div class="policy-content" style="max-width: 900px">
+        <div class="section-label">Help</div>
+        <h2>Support</h2>
+        <p style="margin-bottom: 0;">Need help with LoadScan? We're here for you. Reach out through any of the channels below and we'll get back to you as quickly as possible.</p>
+
+        <div class="support-grid">
+          <div class="support-card">
+            <h3>Email Support</h3>
+            <p>For account issues, billing questions, or general help — send us an email and we'll respond within 1 business day.</p>
+            <a href="mailto:support@load-scan.com" class="support-link">
+              support@load-scan.com
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M5 12h14M12 5l7 7-7 7"/>
+              </svg>
+            </a>
+          </div>
+          <div class="support-card">
+            <h3>Bug Reports</h3>
+            <p>Found something broken? Let us know what happened and we'll investigate and fix it as soon as possible.</p>
+            <a href="mailto:bugs@load-scan.com" class="support-link">
+              bugs@load-scan.com
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M5 12h14M12 5l7 7-7 7"/>
+              </svg>
+            </a>
+          </div>
+          <div class="support-card">
+            <h3>Account Deletion</h3>
+            <p>To delete your account and all associated data, email us with your registered email address and we'll process the request within 30 days.</p>
+            <a href="mailto:support@load-scan.com?subject=Account Deletion Request" class="support-link">
+              Request deletion
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M5 12h14M12 5l7 7-7 7"/>
+              </svg>
+            </a>
+          </div>
+          <div class="support-card">
+            <h3>Enterprise & Team Plans</h3>
+            <p>Interested in setting up LoadScan for your whole team? Reach out and we'll walk you through the enterprise onboarding process.</p>
+            <a href="mailto:support@load-scan.com?subject=Enterprise Inquiry" class="support-link">
+              Get in touch
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M5 12h14M12 5l7 7-7 7"/>
+              </svg>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-inner">
+      <div class="footer-logo">LoadScan</div>
+      <ul class="footer-links">
+        <li><a href="#privacy">Privacy</a></li>
+        <li><a href="#terms">Terms</a></li>
+        <li><a href="#support">Support</a></li>
+        <li><a href="mailto:support@load-scan.com">Contact</a></li>
+      </ul>
+      <p class="footer-copy">© 2026 LoadScan. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <script>
+    // Scroll reveal
+    const reveals = document.querySelectorAll('.reveal');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry, i) => {
+        if (entry.isIntersecting) {
+          setTimeout(() => entry.target.classList.add('visible'), i * 80);
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.1 });
+    reveals.forEach(el => observer.observe(el));
+
+    // Active policy tab on scroll
+    const tabs = document.querySelectorAll('.policy-tab');
+    const sections = ['privacy', 'terms', 'support'].map(id => document.getElementById(id));
+
+    window.addEventListener('scroll', () => {
+      let current = '';
+      sections.forEach(section => {
+        if (section && window.scrollY >= section.offsetTop - 120) {
+          current = section.id;
+        }
+      });
+      tabs.forEach(tab => {
+        tab.classList.toggle('active', tab.getAttribute('href') === '#' + current);
+      });
+    }, { passive: true });
+  </script>
+</body>
+</html>
