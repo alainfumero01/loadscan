@@ -248,7 +248,8 @@
     @media (max-width: 820px) {
       .hero { grid-template-columns: 1fr; padding: 52px var(--pad) 40px; }
       .hero h1 { font-size: 36px; }
-      .hero-device { display: none; }
+      .hero-device { display: flex; }
+      .hero-phone-img { width: 220px; }
       .feature { grid-template-columns: 1fr; gap: 32px; padding: 56px var(--pad); }
       .feature.reverse { direction: ltr; }
       .nav-right .nav-link { display: none; }
@@ -282,7 +283,7 @@
 <section>
   <div class="hero">
     <div class="hero-text">
-      <div class="hero-eyebrow"><span></span>iOS App</div>
+
       <h1>Scan stickers. Build manifests. Know every load's worth.</h1>
       <p class="hero-sub">LoadScan turns appliance label photos into complete, AI-priced manifests — in the time it takes to scan a sticker.</p>
       <a href="#" class="appstore-btn">
