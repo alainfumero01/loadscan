@@ -97,77 +97,32 @@
     .appstore-btn-sub { font-size: 10px; font-weight: 400; opacity: .7; letter-spacing: 0.02em; }
     .appstore-btn-label { font-family: 'Bricolage Grotesque', sans-serif; font-weight: 700; font-size: 15px; letter-spacing: -0.02em; }
 
-    /* ── IPHONE MOCKUP ── */
-    .hero-device { display: flex; justify-content: center; align-items: center; }
-    .iphone {
-      width: 260px; height: 530px;
-      background: #0C1340;
-      border-radius: 44px;
-      padding: 14px;
-      box-shadow:
-        0 0 0 1px rgba(255,255,255,0.1) inset,
-        0 0 0 2px #1a2260,
-        0 32px 80px rgba(12,19,64,0.35),
-        0 8px 24px rgba(0,0,0,0.2);
+    /* ── IPHONE IMAGE ── */
+    .hero-device {
+      display: flex; justify-content: center; align-items: center;
       position: relative;
     }
-    .iphone-notch {
-      position: absolute; top: 14px; left: 50%; transform: translateX(-50%);
-      width: 80px; height: 26px; background: #0C1340;
-      border-radius: 0 0 18px 18px; z-index: 2;
+    .hero-device::before {
+      content: '';
+      position: absolute;
+      width: 220px; height: 220px;
+      background: radial-gradient(ellipse, rgba(37,80,219,0.18) 0%, transparent 70%);
+      bottom: 20px; left: 50%; transform: translateX(-50%);
+      filter: blur(24px);
+      pointer-events: none;
+      z-index: 0;
     }
-    .iphone-screen {
-      width: 100%; height: 100%; background: #F8F9FC;
-      border-radius: 32px; overflow: hidden;
-      display: flex; flex-direction: column;
+    .hero-phone-img {
+      width: 280px;
+      position: relative; z-index: 1;
+      animation: phoneFloat 4s ease-in-out infinite;
+      mix-blend-mode: multiply;
+      filter: drop-shadow(0 24px 48px rgba(12,19,64,0.18)) drop-shadow(0 8px 16px rgba(0,0,0,0.1));
     }
-    /* App header */
-    .app-statusbar { height: 36px; background: #0C1340; flex-shrink: 0;
-      display: flex; align-items: flex-end; padding: 0 16px 6px;
-      justify-content: space-between;
+    @keyframes phoneFloat {
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(-10px); }
     }
-    .app-statusbar span { font-size: 10px; font-weight: 600; color: rgba(255,255,255,0.8); }
-    .app-navbar {
-      background: #0C1340; padding: 10px 16px 14px; flex-shrink: 0;
-    }
-    .app-navbar h2 { font-family: 'Bricolage Grotesque', sans-serif; font-weight: 700; font-size: 20px; color: #fff; letter-spacing: -0.03em; }
-    .app-navbar p { font-size: 10px; color: rgba(255,255,255,0.5); margin-top: 1px; }
-    /* KPI row */
-    .app-kpi {
-      display: grid; grid-template-columns: 1fr 1fr;
-      gap: 6px; padding: 10px 10px 6px; flex-shrink: 0;
-    }
-    .app-kpi-card {
-      background: #fff; border-radius: 10px; padding: 8px 10px;
-      border: 1px solid #E5E9F4;
-    }
-    .app-kpi-card .val { font-family: 'Bricolage Grotesque', sans-serif; font-weight: 700; font-size: 15px; color: #111520; letter-spacing: -0.03em; }
-    .app-kpi-card .lbl { font-size: 9px; color: #9CA3AF; margin-top: 1px; }
-    /* Manifests */
-    .app-section-label { font-size: 10px; font-weight: 600; color: #9CA3AF; padding: 4px 10px 4px; letter-spacing: 0.04em; text-transform: uppercase; }
-    .app-manifest {
-      margin: 0 10px 5px; background: #fff; border-radius: 10px;
-      padding: 9px 11px; border: 1px solid #E5E9F4;
-      display: flex; align-items: center; justify-content: space-between;
-    }
-    .app-manifest-left .name { font-size: 11px; font-weight: 600; color: #111520; }
-    .app-manifest-left .meta { font-size: 9px; color: #9CA3AF; margin-top: 1px; }
-    .app-manifest-badge {
-      font-size: 8.5px; font-weight: 600; padding: 3px 7px; border-radius: 6px;
-    }
-    .badge-sold { background: #EDE9FE; color: #6D28D9; }
-    .badge-active { background: #DCFCE7; color: #16A34A; }
-    .badge-draft { background: #FEF3C7; color: #D97706; }
-    /* Tab bar */
-    .app-tabbar {
-      margin-top: auto; background: #fff; border-top: 1px solid #E5E9F4;
-      display: flex; padding: 8px 0 10px; flex-shrink: 0;
-    }
-    .app-tab { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 3px; }
-    .app-tab svg { width: 16px; height: 16px; }
-    .app-tab span { font-size: 8px; font-weight: 500; }
-    .app-tab.active svg, .app-tab.active span { color: #2550DB; }
-    .app-tab:not(.active) svg, .app-tab:not(.active) span { color: #9CA3AF; }
 
     /* ── FEATURES ── */
     .features { background: var(--bg2); border-top: 1px solid var(--border); }
@@ -339,58 +294,9 @@
       </a>
     </div>
 
-    <!-- iPhone mockup -->
+    <!-- iPhone screenshot -->
     <div class="hero-device">
-      <div class="iphone">
-        <div class="iphone-notch"></div>
-        <div class="iphone-screen">
-          <div class="app-statusbar">
-            <span>9:41</span>
-            <span>●●●</span>
-          </div>
-          <div class="app-navbar">
-            <h2>Dashboard</h2>
-            <p>Monday, March 16</p>
-          </div>
-          <div class="app-kpi">
-            <div class="app-kpi-card"><div class="val">12</div><div class="lbl">Active Loads</div></div>
-            <div class="app-kpi-card"><div class="val">$41,200</div><div class="lbl">Stock Value</div></div>
-            <div class="app-kpi-card"><div class="val">8</div><div class="lbl">Loads Sold</div></div>
-            <div class="app-kpi-card"><div class="val">$6,840</div><div class="lbl">Net Profit</div></div>
-          </div>
-          <div class="app-section-label">Recent Loads</div>
-          <div class="app-manifest">
-            <div class="app-manifest-left"><div class="name">Load #1042</div><div class="meta">14 items · $3,200</div></div>
-            <span class="app-manifest-badge badge-active">Active</span>
-          </div>
-          <div class="app-manifest">
-            <div class="app-manifest-left"><div class="name">Load #1041</div><div class="meta">9 items · $1,850</div></div>
-            <span class="app-manifest-badge badge-sold">Sold</span>
-          </div>
-          <div class="app-manifest">
-            <div class="app-manifest-left"><div class="name">Load #1040</div><div class="meta">21 items · $5,100</div></div>
-            <span class="app-manifest-badge badge-draft">Draft</span>
-          </div>
-          <div class="app-tabbar">
-            <div class="app-tab active">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><path d="M18 17V9M13 17V5M8 17v-3"/></svg>
-              <span>Dashboard</span>
-            </div>
-            <div class="app-tab">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><path d="M14 2v6h6"/></svg>
-              <span>Loads</span>
-            </div>
-            <div class="app-tab">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="5" width="20" height="14" rx="2"/><path d="M2 10h20"/></svg>
-              <span>Plan</span>
-            </div>
-            <div class="app-tab">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>
-              <span>Settings</span>
-            </div>
-          </div>
-        </div>
-      </div>
+      <img src="Adobe Express - file.png" alt="LoadScan app dashboard" class="hero-phone-img" />
     </div>
   </div>
 </section>
