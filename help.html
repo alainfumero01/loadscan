@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Help & FAQ · LoadScan</title>
+  <meta name="description" content="Get help with LoadScan — scanning appliances, building manifests, subscriptions, and more."/>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,700;12..96,800&family=DM+Sans:opsz,wght@9..40,400;9..40,500&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --blue: #2550DB; --blue-dim: #EEF2FF; --navy: #0C1340;
+      --text: #111520; --muted: #6B7280; --faint: #9CA3AF;
+      --border: #E5E9F4; --bg: #FFFFFF; --bg2: #F8F9FC;
+      --max: 780px; --pad: 24px;
+    }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'DM Sans', sans-serif; color: var(--text); background: var(--bg2); -webkit-font-smoothing: antialiased; line-height: 1.65; }
+
+    /* NAV */
+    nav { position: sticky; top: 0; z-index: 100; background: rgba(255,255,255,0.92); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); border-bottom: 1px solid var(--border); }
+    .nav-wrap { max-width: 1080px; margin: 0 auto; padding: 0 var(--pad); height: 58px; display: flex; align-items: center; justify-content: space-between; }
+    .nav-logo { display: flex; align-items: center; gap: 9px; text-decoration: none; }
+    .nav-logo-mark { width: 30px; height: 30px; background: var(--blue); border-radius: 7px; display: flex; align-items: center; justify-content: center; }
+    .nav-logo-mark svg { width: 16px; height: 16px; }
+    .nav-logo-name { font-family: 'Bricolage Grotesque', sans-serif; font-weight: 700; font-size: 16px; color: var(--text); letter-spacing: -0.03em; }
+    .nav-back { font-size: 13.5px; color: var(--muted); text-decoration: none; display: flex; align-items: center; gap: 5px; transition: color .15s; }
+    .nav-back:hover { color: var(--text); }
+
+    /* HERO */
+    .hero { background: var(--navy); padding: 60px var(--pad) 52px; text-align: center; }
+    .hero-eyebrow { display: inline-block; font-size: 11px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(255,255,255,0.5); margin-bottom: 14px; }
+    .hero h1 { font-family: 'Bricolage Grotesque', sans-serif; font-size: clamp(28px, 5vw, 42px); font-weight: 800; color: #fff; letter-spacing: -0.03em; line-height: 1.15; margin-bottom: 14px; }
+    .hero p { font-size: 16px; color: rgba(255,255,255,0.6); max-width: 480px; margin: 0 auto 28px; }
+    .hero-search { position: relative; max-width: 460px; margin: 0 auto; }
+    .hero-search input { width: 100%; padding: 13px 18px 13px 44px; border-radius: 12px; border: none; font-size: 15px; font-family: 'DM Sans', sans-serif; background: rgba(255,255,255,0.1); color: #fff; outline: none; }
+    .hero-search input::placeholder { color: rgba(255,255,255,0.4); }
+    .hero-search input:focus { background: rgba(255,255,255,0.15); }
+    .hero-search svg { position: absolute; left: 14px; top: 50%; transform: translateY(-50%); opacity: 0.5; pointer-events: none; }
+
+    /* MAIN */
+    .page { max-width: var(--max); margin: 0 auto; padding: 52px var(--pad) 80px; }
+
+    /* CATEGORY NAV */
+    .cat-nav { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 40px; }
+    .cat-btn { font-size: 13px; font-weight: 500; padding: 7px 14px; border-radius: 20px; border: 1.5px solid var(--border); background: var(--bg); color: var(--muted); cursor: pointer; transition: all .15s; white-space: nowrap; }
+    .cat-btn:hover, .cat-btn.active { background: var(--blue); border-color: var(--blue); color: #fff; }
+
+    /* SECTIONS */
+    .section { margin-bottom: 48px; }
+    .section-header { display: flex; align-items: center; gap: 10px; margin-bottom: 16px; }
+    .section-icon { width: 34px; height: 34px; border-radius: 9px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+    .section-title { font-family: 'Bricolage Grotesque', sans-serif; font-size: 18px; font-weight: 700; letter-spacing: -0.02em; }
+
+    /* ACCORDION */
+    .accordion { border: 1px solid var(--border); border-radius: 14px; overflow: hidden; background: var(--bg); }
+    .accordion-item + .accordion-item { border-top: 1px solid var(--border); }
+    .accordion-q { width: 100%; text-align: left; background: none; border: none; padding: 17px 20px; font-size: 14.5px; font-weight: 500; color: var(--text); font-family: 'DM Sans', sans-serif; cursor: pointer; display: flex; align-items: center; justify-content: space-between; gap: 12px; transition: background .12s; }
+    .accordion-q:hover { background: var(--bg2); }
+    .accordion-q.open { color: var(--blue); }
+    .chevron { width: 16px; height: 16px; flex-shrink: 0; transition: transform .2s; color: var(--faint); }
+    .accordion-q.open .chevron { transform: rotate(180deg); color: var(--blue); }
+    .accordion-a { display: none; padding: 0 20px 18px; font-size: 14px; color: var(--muted); line-height: 1.75; }
+    .accordion-a.open { display: block; }
+    .accordion-a p + p { margin-top: 10px; }
+    .accordion-a ul { margin: 8px 0 0 18px; }
+    .accordion-a li { margin-bottom: 5px; }
+    .accordion-a a { color: var(--blue); text-decoration: none; }
+    .accordion-a a:hover { text-decoration: underline; }
+    .tag { display: inline-block; font-size: 11px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; padding: 2px 7px; border-radius: 4px; margin-right: 4px; }
+    .tag-free { background: #FEF9C3; color: #854D0E; }
+    .tag-pro { background: #DBEAFE; color: #1D4ED8; }
+    .tag-enterprise { background: #F3E8FF; color: #7E22CE; }
+
+    /* CONTACT CARD */
+    .contact-card { background: var(--navy); border-radius: 16px; padding: 36px 32px; display: flex; align-items: center; justify-content: space-between; gap: 24px; flex-wrap: wrap; margin-top: 48px; }
+    .contact-card h3 { font-family: 'Bricolage Grotesque', sans-serif; font-size: 20px; font-weight: 700; color: #fff; letter-spacing: -0.02em; margin-bottom: 6px; }
+    .contact-card p { font-size: 14px; color: rgba(255,255,255,0.55); }
+    .contact-btn { display: inline-block; padding: 11px 22px; background: var(--blue); color: #fff; font-size: 14px; font-weight: 500; border-radius: 9px; text-decoration: none; white-space: nowrap; transition: opacity .15s; }
+    .contact-btn:hover { opacity: 0.88; }
+
+    /* NO RESULTS */
+    .no-results { display: none; text-align: center; padding: 48px 0; color: var(--muted); }
+    .no-results svg { margin: 0 auto 14px; display: block; opacity: 0.3; }
+
+    @media (max-width: 600px) {
+      .hero { padding: 44px var(--pad) 40px; }
+      .contact-card { text-align: center; justify-content: center; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-wrap">
+    <a href="/" class="nav-logo">
+      <div class="nav-logo-mark">
+        <svg viewBox="0 0 20 20" fill="none"><rect x="3" y="3" width="6" height="6" rx="1.5" fill="white"/><rect x="11" y="3" width="6" height="6" rx="1.5" fill="white" opacity=".6"/><rect x="3" y="11" width="6" height="6" rx="1.5" fill="white" opacity=".6"/><rect x="11" y="11" width="6" height="6" rx="1.5" fill="white" opacity=".3"/></svg>
+      </div>
+      <span class="nav-logo-name">LoadScan</span>
+    </a>
+    <a href="/" class="nav-back">
+      <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M9 2L4 7L9 12" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      Back to home
+    </a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <span class="hero-eyebrow">Support</span>
+  <h1>Help & FAQ</h1>
+  <p>Everything you need to get the most out of LoadScan.</p>
+  <div class="hero-search">
+    <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><circle cx="8" cy="8" r="5.5" stroke="white" stroke-width="1.6"/><path d="M12.5 12.5L16 16" stroke="white" stroke-width="1.6" stroke-linecap="round"/></svg>
+    <input type="text" id="search-input" placeholder="Search questions…" autocomplete="off"/>
+  </div>
+</div>
+
+<!-- MAIN -->
+<div class="page">
+
+  <!-- CATEGORY NAV -->
+  <div class="cat-nav">
+    <button class="cat-btn active" onclick="filterCat('all', this)">All</button>
+    <button class="cat-btn" onclick="filterCat('scanning', this)">Scanning</button>
+    <button class="cat-btn" onclick="filterCat('manifests', this)">Manifests</button>
+    <button class="cat-btn" onclick="filterCat('account', this)">Account</button>
+    <button class="cat-btn" onclick="filterCat('billing', this)">Billing & Plans</button>
+    <button class="cat-btn" onclick="filterCat('teams', this)">Teams</button>
+  </div>
+
+  <div id="no-results" class="no-results">
+    <svg width="40" height="40" viewBox="0 0 40 40" fill="none"><circle cx="18" cy="18" r="11" stroke="#9CA3AF" stroke-width="2"/><path d="M27 27L35 35" stroke="#9CA3AF" stroke-width="2" stroke-linecap="round"/></svg>
+    <p>No results for that search. Try different keywords or <a href="mailto:support@load-scan.com" style="color:var(--blue)">contact support</a>.</p>
+  </div>
+
+  <!-- SCANNING -->
+  <div class="section" data-cat="scanning">
+    <div class="section-header">
+      <div class="section-icon" style="background:#EFF6FF;">
+        <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M2 5V3a1 1 0 011-1h2M13 2h2a1 1 0 011 1v2M16 13v2a1 1 0 01-1 1h-2M5 16H3a1 1 0 01-1-1v-2" stroke="#2550DB" stroke-width="1.6" stroke-linecap="round"/><circle cx="9" cy="9" r="2.5" stroke="#2550DB" stroke-width="1.6"/></svg>
+      </div>
+      <span class="section-title">Scanning Appliances</span>
+    </div>
+    <div class="accordion">
+      <div class="accordion-item" data-q="How do I scan an appliance sticker?">
+        <button class="accordion-q" onclick="toggle(this)">
+          How do I scan an appliance sticker?
+          <svg class="chevron" viewBox="0 0 16 16" fill="none"><path d="M4 6l4 4 4-4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <div class="accordion-a">
+          <p>Open LoadScan and tap the <strong>+</strong> button to start a new manifest (or open an existing one and tap <strong>Scan Item</strong>). Point your camera at the appliance's model/serial sticker — LoadScan will automatically detect the model number and look up the product.</p>
+          <p>For best results, hold the camera 6–12 inches from the sticker in good lighting. The sticker typically appears on the inside of the door, behind the appliance, or on a side panel.</p>
+        </div>
+      </div>
+      <div class="accordion-item" data-q="What if the scan says it's not an appliance?">
+        <button class="accordion-q" onclick="toggle(this)">
+          What if the scan says "not an appliance"?
+          <svg class="chevron" viewBox="0 0 16 16" fill="none"><path d="M4 6l4 4 4-4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <div class="accordion-a">
+          <p>If the AI can't confirm the scanned item is an appliance, it will dismiss the camera and automatically focus the <strong>Model Number</strong> field so you can type it in manually.</p>
+          <p>This usually happens with worn stickers, unusual label formats, or non-standard item types. Just type the model number and LoadScan will look it up from there.</p>
+        </div>
+      </div>
+      <div class="accordion-item" data-q="Can I type the model number manually instead of scanning?">
+        <button class="accordion-q" onclick="toggle(this)">
+          Can I type the model number manually instead of scanning?
+          <svg class="chevron" viewBox="0 0 16 16" fill="none"><path d="M4 6l4 4 4-4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <div class="accordion-a">
+          <p>Yes. On the item entry screen, tap the <strong>Model Number</strong> field and type it in directly. LoadScan will search the product catalog and return the best match, same as scanning.</p>
+        </div>
+      </div>
+      <div class="accordion-item" data-q="Why isn't the product showing up after I scan?">
+        <button class="accordion-q" onclick="toggle(this)">
+          Why isn't the product showing up after I scan?
+          <svg class="chevron" viewBox="0 0 16 16" fill="none"><path d="M4 6l4 4 4-4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <div class="accordion-a">
+          <p>The product catalog is regularly updated, but some less-common models may not be in the database yet. If a lookup fails, you can:</p>
+          <ul>
+            <li>Enter the model number manually and try again</li>
+            <li>Add the item with a custom name and price</li>
+            <li>Email us at <a href="mailto:support@load-scan.com">support@load-scan.com</a> with the model number and we'll add it</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MANIFESTS -->
+  <div class="section" data-cat="manifests">
+    <div class="section-header">
+      <div class="section-icon" style="background:#F0FDF4;">
+        <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><rect x="3" y="2" width="12" height="14" rx="2" stroke="#16A34A" stroke-width="1.6"/><path d="M6 6h6M6 9h6M6 12h4" stroke="#16A34A" stroke-width="1.6" stroke-linecap="round"/></svg>
+      </div>
+      <span class="section-title">Manifests</span>
+    </div>
+    <div class="accordion">
+      <div class="accordion-item" data-q="What is a manifest?">
+        <button class="accordion-q" onclick="toggle(this)">
+          What is a manifest?
+          <svg class="chevron" viewBox="0 0 16 16" fill="none"><path d="M4 6l4 4 4-4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <div class="accordion-a">
+          <p>A manifest is a list of all appliances in a single load or truck. Each manifest has a title, an optional load reference number, and a list of scanned items with their model numbers, conditions, MSRP values, and your asking prices.</p>
+          <p>Manifests make it easy to track what you paid, what you're selling each item for, and your expected profit on the entire load.</p>
+        </div>
+      </div>
+      <div class="accordion-item" data-q="How many manifests can I create?">
+        <button class="accordion-q" onclick="toggle(this)">
+          How many manifests can I create?
+          <svg class="chevron" viewBox="0 0 16 16" fill="none"><path d="M4 6l4 4 4-4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <div class="accordion-a">
+          <p><span class="tag tag-free">Free</span> accounts can create up to <strong>3 manifests</strong> to try out the app.</p>
+          <p><span class="tag tag-pro">Individual</span> and <span class="tag tag-enterprise">Enterprise</span> subscribers get unlimited manifests.</p>
+        </div>
+      </div>
+      <div class="accordion-item" data-q="How do I export or share a manifest?">
+        <button class="accordion-q" onclick="toggle(this)">
+          How do I export or share a manifest?
+          <svg class="chevron" viewBox="0 0 16 16" fill="none"><path d="M4 6l4 4 4-4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <div class="accordion-a">
+          <p>Open the manifest and tap the <strong>Share</strong> icon in the top-right corner. LoadScan exports the manifest as a spreadsheet (CSV) that you can open in Excel, Numbers, or Google Sheets, or share directly via Messages, Mail, or AirDrop.</p>
+        </div>
+      </div>
+      <div class="accordion-item" data-q="What is Load Pricing mode?">
+        <button class="accordion-q" onclick="toggle(this)">
+          What is Load Pricing mode?
+          <svg class="chevron" viewBox="0 0 16 16" fill="none"><path d="M4 6l4 4 4-4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <div class="accordion-a">
+          <p>Load Pricing mode lets you enter what you paid for the entire truckload and your target profit margin. LoadScan will calculate the minimum selling price needed for each item to hit your margin goal — so you always know your floor price before you price anything.</p>
+        </div>
+      </div>
+      <div class="accordion-item" data-q="Can I edit item prices and conditions?">
+        <button class="accordion-q" onclick="toggle(this)">
+          Can I edit item prices and conditions?
+          <svg class="chevron" viewBox="0 0 16 16" fill="none"><path d="M4 6l4 4 4-4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <div class="accordion-a">
+          <p>Yes. Tap any item in a manifest to edit its name, model number, condition (new, like-new, used, for parts), MSRP, and your asking price. Changes save automatically.</p>
+        </div>
+      </div>
+      <div class="accordion-item" data-q="How do I mark a manifest as sold?">
+        <button class="accordion-q" onclick="toggle(this)">
+          How do I mark a manifest as sold?
+          <svg class="chevron" viewBox="0 0 16 16" fill="none"><path d="M4 6l4 4 4-4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <div class="accordion-a">
+          <p>Open the manifest and tap the <strong>⋯</strong> menu (top-right), then select <strong>Mark as Sold</strong>. Sold manifests are kept in your history so you can reference past loads.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ACCOUNT -->
+  <div class="section" data-cat="account">
+    <div class="section-header">
+      <div class="section-icon" style="background:#FFF7ED;">
+        <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><circle cx="9" cy="6.5" r="3" stroke="#EA580C" stroke-width="1.6"/><path d="M3 15c0-3.314 2.686-5 6-5s6 1.686 6 5" stroke="#EA580C" stroke-width="1.6" stroke-linecap="round"/></svg>
+      </div>
+      <span class="section-title">Account</span>
+    </div>
+    <div class="accordion">
+      <div class="accordion-item" data-q="How do I reset my password?">
+        <button class="accordion-q" onclick="toggle(this)">
+          How do I reset my password?
+          <svg class="chevron" viewBox="0 0 16 16" fill="none"><path d="M4 6l4 4 4-4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <div class="accordion-a">
+          <p>In the app, go to <strong>Settings → Change Password</strong>. A reset link will be sent to your email address. Tap the link, enter your new password, then sign back in to the app.</p>
+        </div>
+      </div>
+      <div class="accordion-item" data-q="Can I be signed in on multiple devices?">
+        <button class="accordion-q" onclick="toggle(this)">
+          Can I be signed in on multiple devices?
+          <svg class="chevron" viewBox="0 0 16 16" fill="none"><path d="M4 6l4 4 4-4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <div class="accordion-a">
+          <p>LoadScan allows one active session per account at a time. When you sign in on a new device, any other active sessions are automatically signed out. This keeps your data secure.</p>
+        </div>
+      </div>
+      <div class="accordion-item" data-q="How do I change my email address?">
+        <button class="accordion-q" onclick="toggle(this)">
+          How do I change my email address?
+          <svg class="chevron" viewBox="0 0 16 16" fill="none"><path d="M4 6l4 4 4-4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <div class="accordion-a">
+          <p>Email address changes require manual support. Contact us at <a href="mailto:support@load-scan.com">support@load-scan.com</a> with your current email and the new address you'd like to use.</p>
+        </div>
+      </div>
+      <div class="accordion-item" data-q="How do I delete my account?">
+        <button class="accordion-q" onclick="toggle(this)">
+          How do I delete my account?
+          <svg class="chevron" viewBox="0 0 16 16" fill="none"><path d="M4 6l4 4 4-4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <div class="accordion-a">
+          <p>Go to <strong>Settings → Delete Account</strong>. This permanently removes your account and all associated manifests. This action cannot be undone.</p>
+          <p>If you have an active subscription, cancel it in the App Store before deleting your account to avoid future charges.</p>
+        </div>
+      </div>
+      <div class="accordion-item" data-q="Is Face ID / Touch ID supported?">
+        <button class="accordion-q" onclick="toggle(this)">
+          Is Face ID / Touch ID supported?
+          <svg class="chevron" viewBox="0 0 16 16" fill="none"><path d="M4 6l4 4 4-4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <div class="accordion-a">
+          <p>Yes. Go to <strong>Settings → Security</strong> and toggle on Face ID or Touch ID. Once enabled, you'll be prompted to authenticate with biometrics when opening the app.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- BILLING -->
+  <div class="section" data-cat="billing">
+    <div class="section-header">
+      <div class="section-icon" style="background:#FDF4FF;">
+        <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><rect x="2" y="5" width="14" height="10" rx="2" stroke="#9333EA" stroke-width="1.6"/><path d="M2 8h14" stroke="#9333EA" stroke-width="1.6"/><path d="M5 12h2M9 12h4" stroke="#9333EA" stroke-width="1.6" stroke-linecap="round"/></svg>
+      </div>
+      <span class="section-title">Billing & Plans</span>
+    </div>
+    <div class="accordion">
+      <div class="accordion-item" data-q="What plans does LoadScan offer?">
+        <button class="accordion-q" onclick="toggle(this)">
+          What plans does LoadScan offer?
+          <svg class="chevron" viewBox="0 0 16 16" fill="none"><path d="M4 6l4 4 4-4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <div class="accordion-a">
+          <p><span class="tag tag-free">Free</span> <strong>Free Trial</strong> — up to 3 manifests to try the app, no credit card required.</p>
+          <p><span class="tag tag-pro">Individual</span> <strong>Individual ($19.99/mo)</strong> — unlimited manifests, full scanning, load pricing, and exports. For solo operators.</p>
+          <p><span class="tag tag-enterprise">Enterprise</span> <strong>Enterprise (5, 10, or 15 seats)</strong> — everything in Individual, shared manifests across your team, and invite codes for each seat.</p>
+        </div>
+      </div>
+      <div class="accordion-item" data-q="How do I upgrade my plan?">
+        <button class="accordion-q" onclick="toggle(this)">
+          How do I upgrade my plan?
+          <svg class="chevron" viewBox="0 0 16 16" fill="none"><path d="M4 6l4 4 4-4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <div class="accordion-a">
+          <p>Tap the upgrade prompt that appears when you hit the 3-manifest limit, or go to <strong>Settings → Membership</strong> in the app. Subscriptions are billed monthly through the App Store.</p>
+        </div>
+      </div>
+      <div class="accordion-item" data-q="How do I cancel my subscription?">
+        <button class="accordion-q" onclick="toggle(this)">
+          How do I cancel my subscription?
+          <svg class="chevron" viewBox="0 0 16 16" fill="none"><path d="M4 6l4 4 4-4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <div class="accordion-a">
+          <p>Subscriptions are managed through Apple. To cancel, go to your iPhone's <strong>Settings app → [your name] → Subscriptions</strong>, find LoadScan, and tap <strong>Cancel Subscription</strong>. You'll retain access until the end of the billing period.</p>
+        </div>
+      </div>
+      <div class="accordion-item" data-q="Can I get a refund?">
+        <button class="accordion-q" onclick="toggle(this)">
+          Can I get a refund?
+          <svg class="chevron" viewBox="0 0 16 16" fill="none"><path d="M4 6l4 4 4-4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <div class="accordion-a">
+          <p>Refunds for App Store purchases are handled by Apple. Visit <a href="https://reportaproblem.apple.com" target="_blank">reportaproblem.apple.com</a> and select your LoadScan subscription to request a refund. Apple typically processes requests within a few days.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TEAMS -->
+  <div class="section" data-cat="teams">
+    <div class="section-header">
+      <div class="section-icon" style="background:#F0FDF4;">
+        <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><circle cx="6.5" cy="6" r="2.5" stroke="#16A34A" stroke-width="1.6"/><circle cx="12" cy="6" r="2.5" stroke="#16A34A" stroke-width="1.6"/><path d="M1 15c0-2.761 2.462-4.5 5.5-4.5M17 15c0-2.761-2.238-4.5-5-4.5M9.25 15c0-2.485 1.678-4 4.25-4" stroke="#16A34A" stroke-width="1.6" stroke-linecap="round"/></svg>
+      </div>
+      <span class="section-title">Teams & Enterprise</span>
+    </div>
+    <div class="accordion">
+      <div class="accordion-item" data-q="How do I add team members?">
+        <button class="accordion-q" onclick="toggle(this)">
+          How do I add team members?
+          <svg class="chevron" viewBox="0 0 16 16" fill="none"><path d="M4 6l4 4 4-4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <div class="accordion-a">
+          <p>After purchasing an Enterprise plan, LoadScan emails you a set of single-use invite codes — one per seat. Share each code with a teammate. They create their account (or go to <strong>Settings → Organization → Join</strong> if they already have an account) and enter the code to join your team.</p>
+        </div>
+      </div>
+      <div class="accordion-item" data-q="Can team members see each other's manifests?">
+        <button class="accordion-q" onclick="toggle(this)">
+          Can team members see each other's manifests?
+          <svg class="chevron" viewBox="0 0 16 16" fill="none"><path d="M4 6l4 4 4-4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <div class="accordion-a">
+          <p>Yes. All members of an Enterprise organization share a manifest pool. Any manifest created by any team member is visible to the whole team — useful for tracking inventory across multiple people working the same load.</p>
+        </div>
+      </div>
+      <div class="accordion-item" data-q="What happens to my manifests if I leave an organization?">
+        <button class="accordion-q" onclick="toggle(this)">
+          What happens to my manifests if I leave an organization?
+          <svg class="chevron" viewBox="0 0 16 16" fill="none"><path d="M4 6l4 4 4-4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <div class="accordion-a">
+          <p>Manifests belong to the organization, not the individual user. If you leave an organization, the manifests remain with the org. Your account reverts to a personal Free account.</p>
+        </div>
+      </div>
+      <div class="accordion-item" data-q="How do I generate new invite codes?">
+        <button class="accordion-q" onclick="toggle(this)">
+          How do I generate new invite codes?
+          <svg class="chevron" viewBox="0 0 16 16" fill="none"><path d="M4 6l4 4 4-4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <div class="accordion-a">
+          <p>As the organization owner, go to <strong>Settings → Membership → Generate Invite Link</strong>. This creates a new set of invite codes for your remaining seats and re-sends them to your email. Previous unused codes are deactivated when new ones are generated.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CONTACT -->
+  <div class="contact-card">
+    <div>
+      <h3>Still need help?</h3>
+      <p>Our team typically responds within one business day.</p>
+    </div>
+    <a href="mailto:support@load-scan.com" class="contact-btn">Email Support</a>
+  </div>
+
+</div><!-- /page -->
+
+<script>
+  // Accordion
+  function toggle(btn) {
+    const isOpen = btn.classList.contains('open');
+    // Close all
+    document.querySelectorAll('.accordion-q.open').forEach(b => {
+      b.classList.remove('open');
+      b.nextElementSibling.classList.remove('open');
+    });
+    if (!isOpen) {
+      btn.classList.add('open');
+      btn.nextElementSibling.classList.add('open');
+    }
+  }
+
+  // Category filter
+  function filterCat(cat, btn) {
+    document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    document.querySelectorAll('.section').forEach(s => {
+      s.style.display = (cat === 'all' || s.dataset.cat === cat) ? '' : 'none';
+    });
+    document.getElementById('no-results').style.display = 'none';
+    document.getElementById('search-input').value = '';
+  }
+
+  // Search
+  document.getElementById('search-input').addEventListener('input', function() {
+    const q = this.value.trim().toLowerCase();
+    if (!q) {
+      document.querySelectorAll('.section').forEach(s => s.style.display = '');
+      document.querySelectorAll('.accordion-item').forEach(i => i.style.display = '');
+      document.getElementById('no-results').style.display = 'none';
+      document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('active'));
+      document.querySelector('.cat-btn').classList.add('active');
+      return;
+    }
+    // Reset category
+    document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('active'));
+
+    let anyVisible = false;
+    document.querySelectorAll('.section').forEach(s => {
+      let sectionHasMatch = false;
+      s.querySelectorAll('.accordion-item').forEach(item => {
+        const text = (item.dataset.q + ' ' + item.querySelector('.accordion-a').textContent).toLowerCase();
+        const match = text.includes(q);
+        item.style.display = match ? '' : 'none';
+        if (match) sectionHasMatch = true;
+      });
+      s.style.display = sectionHasMatch ? '' : 'none';
+      if (sectionHasMatch) anyVisible = true;
+    });
+
+    document.getElementById('no-results').style.display = anyVisible ? 'none' : 'block';
+  });
+</script>
+</body>
+</html>
