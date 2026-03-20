@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Join the Waitlist · LoadScan</title>
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <meta name="description" content="Join the LoadScan waitlist to hear when the app is available."/>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,700;12..96,800&family=DM+Sans:opsz,wght@9..40,400;9..40,500&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --blue: #2550DB; --blue-dim: #EEF2FF; --navy: #0C1340;
+      --text: #111520; --muted: #6B7280; --faint: #9CA3AF;
+      --border: #E5E9F4; --bg: #FFFFFF; --bg2: #F8F9FC;
+      --max: 1080px; --pad: 24px;
+    }
+    body {
+      font-family: 'DM Sans', sans-serif;
+      color: var(--text);
+      background:
+        radial-gradient(circle at top right, rgba(37, 80, 219, 0.12), transparent 30%),
+        linear-gradient(180deg, #FFFFFF 0%, #F8F9FC 100%);
+      min-height: 100vh;
+      -webkit-font-smoothing: antialiased;
+      line-height: 1.6;
+    }
+    nav {
+      position: sticky; top: 0; z-index: 100;
+      background: rgba(255,255,255,0.9);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-wrap {
+      max-width: var(--max); margin: 0 auto; padding: 0 var(--pad);
+      height: 58px; display: flex; align-items: center; justify-content: space-between;
+    }
+    .nav-logo { display: flex; align-items: center; gap: 9px; text-decoration: none; }
+    .nav-logo-mark {
+      width: 30px; height: 30px; background: var(--blue); border-radius: 7px;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .nav-logo-mark svg { width: 16px; height: 16px; }
+    .nav-logo-name {
+      font-family: 'Bricolage Grotesque', sans-serif;
+      font-weight: 700; font-size: 16px; color: var(--text); letter-spacing: -0.03em;
+    }
+    .nav-back {
+      font-size: 13.5px; color: var(--muted); text-decoration: none;
+      display: flex; align-items: center; gap: 6px;
+    }
+    .shell {
+      max-width: var(--max); margin: 0 auto; padding: 64px var(--pad) 80px;
+      display: grid; grid-template-columns: minmax(0, 1fr) 420px; gap: 48px; align-items: center;
+    }
+    .eyebrow {
+      display: inline-flex; align-items: center; gap: 6px;
+      font-size: 12px; font-weight: 600; color: var(--blue);
+      letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 18px;
+    }
+    .eyebrow span {
+      width: 5px; height: 5px; border-radius: 50%; background: var(--blue);
+    }
+    h1 {
+      font-family: 'Bricolage Grotesque', sans-serif;
+      font-size: clamp(38px, 6vw, 58px); line-height: 1.03; letter-spacing: -0.05em;
+      margin-bottom: 18px;
+    }
+    .lede {
+      font-size: 18px; color: var(--muted); max-width: 520px;
+      margin-bottom: 28px;
+    }
+    .benefits {
+      display: flex; flex-wrap: wrap; gap: 12px 18px; list-style: none;
+      margin-bottom: 28px; color: var(--muted); font-size: 14px; font-weight: 500;
+    }
+    .benefits li { position: relative; padding-left: 14px; }
+    .benefits li::before {
+      content: ''; position: absolute; left: 0; top: 9px;
+      width: 5px; height: 5px; border-radius: 50%; background: var(--blue);
+    }
+    .card {
+      background: rgba(255,255,255,0.96);
+      border: 1px solid var(--border); border-radius: 24px;
+      padding: 28px; box-shadow: 0 18px 48px rgba(12,19,64,0.08);
+    }
+    .card h2 {
+      font-family: 'Bricolage Grotesque', sans-serif;
+      font-size: 26px; line-height: 1.1; letter-spacing: -0.03em; margin-bottom: 10px;
+    }
+    .card p { color: var(--muted); font-size: 15px; margin-bottom: 20px; }
+    label {
+      display: block; font-size: 13px; font-weight: 600; color: #374151; margin-bottom: 8px;
+    }
+    input[type="email"] {
+      width: 100%; padding: 14px 15px; border-radius: 12px;
+      border: 1.5px solid var(--border); font-size: 15px; outline: none;
+      transition: border-color 0.15s, box-shadow 0.15s;
+      margin-bottom: 14px; background: #fff; color: var(--text);
+    }
+    input[type="email"]:focus {
+      border-color: var(--blue);
+      box-shadow: 0 0 0 4px rgba(37,80,219,0.08);
+    }
+    .honeypot { position: absolute; left: -9999px; opacity: 0; pointer-events: none; }
+    button {
+      width: 100%; padding: 14px;
+      background: var(--blue); color: #fff; border: none; border-radius: 12px;
+      font-size: 15px; font-weight: 700; cursor: pointer; transition: opacity 0.15s;
+    }
+    button:hover { opacity: 0.92; }
+    button:disabled { opacity: 0.5; cursor: not-allowed; }
+    .meta {
+      margin-top: 16px; font-size: 13px; color: var(--faint); line-height: 1.7;
+    }
+    .meta a { color: var(--blue); text-decoration: none; }
+    .message {
+      margin-top: 16px; padding: 12px 14px; border-radius: 12px;
+      font-size: 14px; line-height: 1.55; display: none;
+    }
+    .message.error { background: #FEF2F2; color: #DC2626; border: 1px solid #FECACA; }
+    .message.success { background: #F0FDF4; color: #15803D; border: 1px solid #BBF7D0; }
+    .visual {
+      min-height: 420px; display: flex; align-items: center; justify-content: center;
+      position: relative;
+    }
+    .glow {
+      position: absolute; inset: 10% 14%; border-radius: 50%;
+      background: radial-gradient(circle, rgba(37,80,219,0.18) 0%, rgba(37,80,219,0.02) 70%, transparent 100%);
+      filter: blur(18px);
+    }
+    .panel {
+      position: relative; z-index: 1;
+      width: min(100%, 360px);
+      background: #fff; border: 1px solid var(--border); border-radius: 28px;
+      padding: 28px 24px; box-shadow: 0 18px 48px rgba(12,19,64,0.08);
+    }
+    .panel-badge {
+      display: inline-flex; align-items: center; gap: 6px;
+      font-size: 11px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase;
+      color: var(--blue); margin-bottom: 16px;
+    }
+    .panel h3 {
+      font-family: 'Bricolage Grotesque', sans-serif;
+      font-size: 28px; line-height: 1.08; letter-spacing: -0.04em; margin-bottom: 12px;
+    }
+    .panel p {
+      font-size: 15px; color: var(--muted); margin-bottom: 18px;
+    }
+    .panel-list {
+      list-style: none; display: grid; gap: 10px;
+      font-size: 14px; color: var(--text);
+    }
+    .panel-list li {
+      padding: 11px 12px; border-radius: 12px; background: var(--bg2); border: 1px solid var(--border);
+    }
+    @media (max-width: 860px) {
+      .shell { grid-template-columns: 1fr; gap: 24px; padding-top: 44px; }
+      .visual { min-height: 280px; }
+      .panel { width: 100%; }
+    }
+  </style>
+</head>
+<body>
+  <nav>
+    <div class="nav-wrap">
+      <a href="/" class="nav-logo">
+        <div class="nav-logo-mark">
+          <svg viewBox="0 0 24 24" fill="none">
+            <path stroke="white" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round" d="M7.5 4 L4 4 L4 7.5 M16.5 4 L20 4 L20 7.5 M7.5 20 L4 20 L4 16.5 M16.5 20 L20 20 L20 16.5"/>
+            <rect x="5.5" y="7.8" width="1.9" height="8.4" rx="0.3" fill="white"/>
+            <rect x="7.6" y="8.7" width="0.7" height="6.6" rx="0.2" fill="white" opacity="0.82"/>
+            <rect x="8.5" y="7.8" width="1.4" height="8.4" rx="0.3" fill="white"/>
+            <rect x="10.1" y="8.7" width="0.7" height="6.6" rx="0.2" fill="white" opacity="0.82"/>
+            <rect x="11.0" y="7.8" width="1.9" height="8.4" rx="0.3" fill="white"/>
+            <rect x="13.1" y="8.7" width="0.7" height="6.6" rx="0.2" fill="white" opacity="0.82"/>
+            <rect x="14.0" y="7.8" width="1.4" height="8.4" rx="0.3" fill="white"/>
+            <rect x="15.6" y="8.7" width="0.7" height="6.6" rx="0.2" fill="white" opacity="0.82"/>
+            <rect x="16.5" y="7.8" width="1.9" height="8.4" rx="0.3" fill="white"/>
+          </svg>
+        </div>
+        <span class="nav-logo-name">LoadScan</span>
+      </a>
+      <a href="/" class="nav-back">
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M9 2L4 7L9 12" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        Back to home
+      </a>
+    </div>
+  </nav>
+
+  <main class="shell">
+    <section>
+      <p class="eyebrow"><span></span> LoadScan Waitlist</p>
+      <h1>Be first to know when LoadScan is live.</h1>
+      <p class="lede">Join the waitlist and we’ll email you when LoadScan is ready, so you can start saving time on appliance intake and load creation from day one.</p>
+      <ul class="benefits">
+        <li>Faster intake</li>
+        <li>Cleaner manifests</li>
+        <li>Built for resellers</li>
+      </ul>
+      <div class="card">
+        <h2>Join the waitlist</h2>
+        <p>Enter your email and we’ll send you an update when LoadScan is available.</p>
+        <form id="waitlist-form">
+          <label for="email">Work email</label>
+          <input type="email" id="email" name="email" placeholder="you@company.com" autocomplete="email" required />
+          <input type="text" id="website" name="website" class="honeypot" tabindex="-1" autocomplete="off" />
+          <button id="submit-btn" type="submit">Join Waitlist</button>
+          <div id="message" class="message"></div>
+        </form>
+        <p class="meta">By joining, you agree we may email you about launch updates. No spam. See our <a href="/privacy">Privacy Policy</a>.</p>
+      </div>
+    </section>
+
+    <aside class="visual" aria-hidden="true">
+      <div class="glow"></div>
+      <div class="panel">
+        <div class="panel-badge">Built for iPhone</div>
+        <h3>Save time on every appliance load.</h3>
+        <p>LoadScan helps your team move from sticker photos to organized manifests faster.</p>
+        <ul class="panel-list">
+          <li>Scan stickers and capture model details</li>
+          <li>Build cleaner load manifests faster</li>
+          <li>Keep intake organized from the field</li>
+        </ul>
+      </div>
+    </aside>
+  </main>
+
+  <script>
+    const WAITLIST_FUNCTION_URL = "https://xtukjyzrhcqvzkakmqsr.supabase.co/functions/v1/join-waitlist";
+    const form = document.getElementById("waitlist-form");
+    const emailInput = document.getElementById("email");
+    const websiteInput = document.getElementById("website");
+    const button = document.getElementById("submit-btn");
+    const message = document.getElementById("message");
+
+    function showMessage(text, type) {
+      message.textContent = text;
+      message.className = "message " + type;
+      message.style.display = "block";
+    }
+
+    form.addEventListener("submit", async (event) => {
+      event.preventDefault();
+
+      const email = emailInput.value.trim();
+      if (!email) {
+        showMessage("Enter your email address to join the waitlist.", "error");
+        return;
+      }
+
+      button.disabled = true;
+      button.textContent = "Saving…";
+      message.style.display = "none";
+
+      try {
+        const response = await fetch(WAITLIST_FUNCTION_URL, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            email,
+            website: websiteInput.value,
+            source: "waitlist_page",
+            referrer: window.location.href,
+          }),
+        });
+
+        const data = await response.json();
+        if (!response.ok) {
+          throw new Error(data.error || "We couldn't save your email right now.");
+        }
+
+        if (data.alreadyJoined) {
+          showMessage("You're already on the list. We'll email you when LoadScan is ready.", "success");
+        } else {
+          showMessage("You're on the waitlist. We'll reach out when LoadScan is live.", "success");
+          form.reset();
+        }
+      } catch (error) {
+        showMessage(error.message || "We couldn't save your email right now.", "error");
+      } finally {
+        button.disabled = false;
+        button.textContent = "Join Waitlist";
+      }
+    });
+  </script>
+</body>
+</html>
