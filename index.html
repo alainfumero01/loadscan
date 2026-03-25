@@ -17,512 +17,247 @@
   <meta name="twitter:image" content="https://load-scan.com/og-image.png" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,500;12..96,600;12..96,700;12..96,800&family=Plus+Jakarta+Sans:wght@300;400;500;600&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Inter:wght@300;400;500&display=swap" rel="stylesheet" />
 
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     :root {
-      --bg:         #04080f;
-      --bg2:        #070d1a;
-      --surface:    #0b1525;
-      --surface2:   #0f1c30;
-      --card:       rgba(255,255,255,0.032);
-      --card-hover: rgba(255,255,255,0.058);
-      --border:     rgba(255,255,255,0.07);
-      --border-hi:  rgba(59,110,255,0.4);
-      --blue:       #3B6EFF;
-      --blue-dim:   #2550DB;
-      --cyan:       #00C4FF;
-      --purple:     #8B5CF6;
-      --grad:       linear-gradient(135deg, #3B6EFF 0%, #00C4FF 100%);
-      --grad-r:     linear-gradient(135deg, #00C4FF 0%, #3B6EFF 100%);
-      --text:       #FFFFFF;
-      --muted:      rgba(255,255,255,0.52);
-      --faint:      rgba(255,255,255,0.28);
-      --max:        1100px;
-      --pad:        24px;
-      --r:          16px;
+      --bg:       #080A0F;
+      --surface:  #0D1117;
+      --border:   rgba(255,255,255,0.07);
+      --blue:     #3B6EFF;
+      --text:     #F0F2F7;
+      --muted:    rgba(240,242,247,0.48);
+      --faint:    rgba(240,242,247,0.26);
+      --max:      960px;
+      --pad:      24px;
     }
 
     html { scroll-behavior: smooth; }
     body {
-      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-family: 'Inter', sans-serif;
       color: var(--text); background: var(--bg);
-      -webkit-font-smoothing: antialiased; line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+      line-height: 1.6;
       overflow-x: hidden;
     }
 
     /* ── NAV ── */
     nav {
-      position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
-      background: rgba(4,8,15,0.75);
-      backdrop-filter: blur(24px) saturate(180%);
-      -webkit-backdrop-filter: blur(24px) saturate(180%);
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
       border-bottom: 1px solid var(--border);
+      background: rgba(8,10,15,0.85);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
     }
-    .nav-wrap {
+    .nav-inner {
       max-width: var(--max); margin: 0 auto; padding: 0 var(--pad);
-      height: 62px; display: flex; align-items: center; justify-content: space-between;
+      height: 58px; display: flex; align-items: center; justify-content: space-between;
     }
-    .nav-logo { display: flex; align-items: center; gap: 10px; text-decoration: none; }
-    .nav-logo-mark {
-      width: 32px; height: 32px; background: var(--grad); border-radius: 9px;
+    .nav-logo { display: flex; align-items: center; gap: 9px; text-decoration: none; }
+    .nav-mark {
+      width: 28px; height: 28px; border-radius: 7px;
+      background: var(--blue);
       display: flex; align-items: center; justify-content: center;
-      box-shadow: 0 0 18px rgba(59,110,255,0.45);
     }
-    .nav-logo-mark svg { width: 17px; height: 17px; }
-    .nav-logo-name { font-family: 'Bricolage Grotesque', sans-serif; font-weight: 700; font-size: 17px; color: var(--text); letter-spacing: -0.03em; }
-    .nav-right { display: flex; align-items: center; gap: 4px; }
-    .nav-link { font-size: 14px; color: var(--muted); text-decoration: none; transition: color .15s, background .15s; padding: 7px 13px; border-radius: 8px; }
-    .nav-link:hover { color: var(--text); background: var(--card); }
-    .nav-ghost {
-      font-size: 13.5px; font-weight: 500; color: var(--muted);
-      padding: 8px 16px; border-radius: 10px; text-decoration: none;
-      border: 1px solid var(--border); margin-right: 4px;
-      transition: border-color .15s, color .15s, background .15s;
+    .nav-mark svg { width: 15px; height: 15px; }
+    .nav-wordmark { font-family: 'Bricolage Grotesque', sans-serif; font-weight: 700; font-size: 16px; color: var(--text); letter-spacing: -0.03em; }
+    .nav-links { display: flex; align-items: center; gap: 2px; }
+    .nav-link { font-size: 13.5px; color: var(--muted); text-decoration: none; padding: 6px 12px; border-radius: 7px; transition: color .15s, background .15s; }
+    .nav-link:hover { color: var(--text); background: rgba(255,255,255,0.05); }
+    .nav-dl {
+      font-size: 13px; font-weight: 500; color: #fff;
+      background: var(--blue); padding: 7px 16px; border-radius: 8px;
+      text-decoration: none; margin-left: 6px;
+      transition: opacity .15s;
     }
-    .nav-ghost:hover { border-color: var(--border-hi); color: var(--text); }
-    .nav-cta {
-      font-size: 13.5px; font-weight: 600; color: #fff; background: var(--grad);
-      padding: 9px 20px; border-radius: 10px; text-decoration: none;
-      transition: opacity .15s, transform .15s, box-shadow .15s;
-      box-shadow: 0 0 18px rgba(59,110,255,0.35); letter-spacing: -0.01em;
-    }
-    .nav-cta:hover { opacity: 0.9; transform: translateY(-1px); box-shadow: 0 4px 24px rgba(59,110,255,0.55); }
+    .nav-dl:hover { opacity: 0.85; }
 
     /* ── HERO ── */
-    .hero-section {
-      position: relative; min-height: 100vh;
-      display: flex; align-items: center; padding-top: 62px; overflow: hidden;
+    .hero {
+      padding: 120px var(--pad) 80px;
+      text-align: center;
     }
-    /* Aurora blobs */
-    .aurora { position: absolute; border-radius: 50%; filter: blur(90px); pointer-events: none; }
-    .aurora-1 { width: 650px; height: 650px; background: radial-gradient(ellipse, rgba(59,110,255,0.22) 0%, transparent 70%); top: -220px; left: -80px; animation: drift1 14s ease-in-out infinite; }
-    .aurora-2 { width: 480px; height: 480px; background: radial-gradient(ellipse, rgba(0,196,255,0.14) 0%, transparent 70%); top: -80px; right: -60px; animation: drift2 17s ease-in-out infinite; }
-    .aurora-3 { width: 380px; height: 380px; background: radial-gradient(ellipse, rgba(139,92,246,0.10) 0%, transparent 70%); bottom: 60px; left: 38%; animation: drift3 20s ease-in-out infinite; }
-    @keyframes drift1 { 0%,100%{transform:translate(0,0)} 33%{transform:translate(50px,35px)} 66%{transform:translate(-35px,55px)} }
-    @keyframes drift2 { 0%,100%{transform:translate(0,0)} 33%{transform:translate(-70px,45px)} 66%{transform:translate(35px,-25px)} }
-    @keyframes drift3 { 0%,100%{transform:translate(0,0)} 50%{transform:translate(70px,-55px)} }
+    .hero-inner { max-width: 620px; margin: 0 auto; }
 
-    /* Grid lines bg */
-    .grid-bg {
-      position: absolute; inset: 0; pointer-events: none; overflow: hidden; z-index: 0;
-      background-image: linear-gradient(rgba(59,110,255,0.04) 1px, transparent 1px), linear-gradient(90deg, rgba(59,110,255,0.04) 1px, transparent 1px);
-      background-size: 60px 60px;
-      mask-image: radial-gradient(ellipse 80% 80% at 50% 0%, black 30%, transparent 100%);
+    .hero-label {
+      display: inline-block;
+      font-size: 11.5px; font-weight: 500; letter-spacing: 0.04em;
+      color: var(--muted); text-transform: uppercase;
+      margin-bottom: 28px;
     }
-
-    .hero-wrap {
-      max-width: var(--max); margin: 0 auto; padding: 80px var(--pad) 60px;
-      display: grid; grid-template-columns: 1fr 440px; gap: 56px; align-items: center;
-      position: relative; z-index: 1; width: 100%;
-    }
-
-    .eyebrow {
-      display: inline-flex; align-items: center; gap: 8px;
-      padding: 5px 14px; border-radius: 100px;
-      background: rgba(59,110,255,0.1); border: 1px solid rgba(59,110,255,0.28);
-      font-size: 11.5px; font-weight: 600; color: var(--cyan);
-      letter-spacing: 0.06em; text-transform: uppercase; margin-bottom: 22px;
-    }
-    .eyebrow-dot {
-      width: 6px; height: 6px; border-radius: 50%;
-      background: var(--cyan); box-shadow: 0 0 8px var(--cyan);
-      animation: blink 2.2s ease-in-out infinite;
-    }
-    @keyframes blink { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:0.55;transform:scale(0.75)} }
 
     .hero h1 {
       font-family: 'Bricolage Grotesque', sans-serif;
-      font-weight: 800; font-size: 54px; line-height: 1.02;
-      letter-spacing: -0.045em; color: var(--text); margin-bottom: 22px;
+      font-weight: 800; font-size: 52px; line-height: 1.04;
+      letter-spacing: -0.045em; color: var(--text);
+      margin-bottom: 20px;
     }
-    .grad-word {
-      background: var(--grad); -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent; background-clip: text;
-    }
+
     .hero-sub {
-      font-size: 17.5px; font-weight: 400; color: var(--muted);
-      line-height: 1.68; margin-bottom: 34px; max-width: 430px;
+      font-size: 17px; font-weight: 300; color: var(--muted);
+      line-height: 1.7; margin-bottom: 36px; max-width: 480px; margin-left: auto; margin-right: auto;
     }
 
-    /* CTA buttons */
-    .cta-group { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; margin-bottom: 36px; }
-    .btn-store {
-      display: inline-flex; align-items: center; gap: 11px;
+    .hero-actions { display: flex; align-items: center; justify-content: center; gap: 12px; flex-wrap: wrap; }
+
+    .btn-primary {
+      display: inline-flex; align-items: center; gap: 10px;
       background: var(--text); color: var(--bg);
-      padding: 13px 22px; border-radius: 14px; text-decoration: none;
-      transition: transform .2s, box-shadow .2s;
-      box-shadow: 0 4px 28px rgba(0,0,0,0.45), inset 0 0 0 1px rgba(255,255,255,0.12);
+      padding: 12px 20px; border-radius: 11px; text-decoration: none;
+      transition: opacity .15s, transform .15s;
     }
-    .btn-store:hover { transform: translateY(-3px); box-shadow: 0 10px 36px rgba(0,0,0,0.55); }
-    .btn-store svg { width: 23px; height: 23px; flex-shrink: 0; }
-    .btn-store-text { display: flex; flex-direction: column; gap: 1px; }
-    .btn-store-sub { font-size: 10px; font-weight: 400; opacity: .58; letter-spacing: 0.04em; }
-    .btn-store-label { font-family: 'Bricolage Grotesque', sans-serif; font-weight: 700; font-size: 16px; letter-spacing: -0.02em; }
-    .btn-outline {
-      display: inline-flex; align-items: center; gap: 8px;
-      padding: 13px 22px; border-radius: 14px; text-decoration: none;
-      font-size: 14.5px; font-weight: 500; color: var(--muted);
+    .btn-primary:hover { opacity: 0.9; transform: translateY(-1px); }
+    .btn-primary svg { width: 20px; height: 20px; flex-shrink: 0; }
+    .btn-primary-text { display: flex; flex-direction: column; gap: 0; text-align: left; }
+    .btn-primary-sub { font-size: 9.5px; font-weight: 400; opacity: .55; letter-spacing: 0.04em; }
+    .btn-primary-label { font-family: 'Bricolage Grotesque', sans-serif; font-weight: 700; font-size: 14.5px; letter-spacing: -0.02em; }
+
+    .btn-secondary {
+      font-size: 14px; font-weight: 400; color: var(--muted);
+      text-decoration: none; padding: 12px 18px; border-radius: 11px;
       border: 1px solid var(--border);
-      transition: border-color .2s, color .2s, background .2s, transform .2s;
+      transition: color .15s, border-color .15s;
     }
-    .btn-outline:hover { border-color: var(--border-hi); color: var(--text); background: var(--card); transform: translateY(-2px); }
+    .btn-secondary:hover { color: var(--text); border-color: rgba(255,255,255,0.18); }
 
-    /* Proof row */
-    .hero-proof { display: flex; align-items: center; gap: 18px; flex-wrap: wrap; }
-    .stars-row { display: flex; gap: 2px; }
-    .stars-row svg { width: 14px; height: 14px; fill: #FBBF24; }
-    .proof-text { font-size: 12.5px; color: var(--muted); }
-    .proof-pipe { width: 1px; height: 18px; background: var(--border); }
-    .proof-item { display: flex; align-items: center; gap: 5px; font-size: 12.5px; color: var(--muted); }
-    .proof-item svg { width: 13px; height: 13px; opacity: 0.6; }
+    .hero-note {
+      margin-top: 18px; font-size: 12px; color: var(--faint);
+    }
 
-    /* ── PHONE DEVICE ── */
-    .hero-device {
-      display: flex; justify-content: center; align-items: center; position: relative;
+    /* ── PHONE IMAGE ── */
+    .device-section {
+      padding: 0 var(--pad) 80px;
+      display: flex; justify-content: center;
     }
-    .device-inner { position: relative; }
-    .glow-ring {
-      position: absolute; border-radius: 50%; border: 1px solid;
-      top: 50%; left: 50%; transform: translate(-50%,-50%);
+    .device-img {
+      width: 260px;
+      filter: drop-shadow(0 32px 48px rgba(0,0,0,0.5));
+      animation: float 5s ease-in-out infinite;
     }
-    .glow-ring-1 { width: 310px; height: 310px; border-color: rgba(59,110,255,0.16); animation: ring-pulse 3s ease-in-out infinite 0s; }
-    .glow-ring-2 { width: 430px; height: 430px; border-color: rgba(59,110,255,0.09); animation: ring-pulse 3s ease-in-out infinite 0.9s; }
-    .glow-ring-3 { width: 550px; height: 550px; border-color: rgba(59,110,255,0.05); animation: ring-pulse 3s ease-in-out infinite 1.8s; }
-    @keyframes ring-pulse { 0%,100%{opacity:1} 50%{opacity:0.35} }
-    .phone-glow {
-      position: absolute; bottom: -50px; left: 50%; transform: translateX(-50%);
-      width: 220px; height: 130px;
-      background: radial-gradient(ellipse, rgba(59,110,255,0.55) 0%, transparent 70%);
-      filter: blur(22px);
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-10px); }
     }
-    .hero-phone-img {
-      width: 295px; position: relative; z-index: 2;
-      animation: float 4.5s ease-in-out infinite;
-      filter: drop-shadow(0 40px 60px rgba(0,0,0,0.55)) drop-shadow(0 0 36px rgba(59,110,255,0.28));
-    }
-    @keyframes float { 0%,100%{transform:translateY(0) rotate(0deg)} 50%{transform:translateY(-13px) rotate(0.4deg)} }
 
-    /* Floating callout badges */
-    .float-badge {
-      position: absolute; z-index: 3;
-      background: rgba(11,21,37,0.92);
-      border: 1px solid rgba(255,255,255,0.1);
-      border-radius: 12px; padding: 10px 14px;
-      backdrop-filter: blur(20px);
+    /* ── DIVIDER ── */
+    hr.divide {
+      border: none; border-top: 1px solid var(--border);
+      max-width: var(--max); margin: 0 auto;
     }
-    .float-badge-1 { top: 14%; right: -16px; animation: fbFloat 5s ease-in-out infinite 0s; }
-    .float-badge-2 { bottom: 22%; left: -28px; animation: fbFloat 5s ease-in-out infinite 1.8s; }
-    @keyframes fbFloat { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-8px)} }
-    .fb-val { font-family: 'Bricolage Grotesque', sans-serif; font-weight: 800; font-size: 15px; color: var(--text); letter-spacing: -0.03em; }
-    .fb-lbl { font-size: 10px; color: var(--muted); }
 
-    /* ── STATS STRIP ── */
-    .stats-strip {
-      background: var(--bg2); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);
+    /* ── VIDEO ── */
+    .video-section {
+      padding: 80px var(--pad);
+      max-width: var(--max); margin: 0 auto;
     }
-    .stats-wrap {
-      max-width: var(--max); margin: 0 auto; padding: 28px var(--pad);
-      display: grid; grid-template-columns: repeat(4,1fr); gap: 0;
+    .video-label {
+      text-align: center;
+      font-size: 11.5px; font-weight: 500; letter-spacing: 0.04em;
+      color: var(--muted); text-transform: uppercase;
+      margin-bottom: 12px;
     }
-    .stat-item {
-      display: flex; flex-direction: column; align-items: center; gap: 4px; padding: 8px 16px;
+    .video-heading {
+      font-family: 'Bricolage Grotesque', sans-serif;
+      font-weight: 700; font-size: 28px; letter-spacing: -0.03em;
+      text-align: center; margin-bottom: 32px; color: var(--text);
+    }
+    .video-wrap {
+      max-width: 700px; margin: 0 auto;
+      border-radius: 14px; overflow: hidden;
+      border: 1px solid var(--border);
+      background: var(--surface);
+    }
+    .video-wrap video {
+      width: 100%; display: block;
+    }
+
+    /* ── FEATURES ── */
+    .features-section {
+      padding: 80px var(--pad);
+      max-width: var(--max); margin: 0 auto;
+    }
+    .features-grid {
+      display: grid; grid-template-columns: repeat(3, 1fr);
+      gap: 0;
+      border: 1px solid var(--border); border-radius: 14px;
+      overflow: hidden;
+    }
+    .feat {
+      padding: 32px 28px;
       border-right: 1px solid var(--border);
     }
-    .stat-item:last-child { border-right: none; }
-    .stat-val {
-      font-family: 'Bricolage Grotesque', sans-serif; font-weight: 800; font-size: 26px; letter-spacing: -0.04em;
-      background: var(--grad); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+    .feat:last-child { border-right: none; }
+    .feat-num {
+      font-size: 11px; font-weight: 500; letter-spacing: 0.06em;
+      color: var(--blue); margin-bottom: 14px;
     }
-    .stat-lbl { font-size: 12px; color: var(--muted); text-align: center; }
-
-    /* ── SECTION COMMONS ── */
-    .section-label {
-      display: inline-flex; align-items: center; gap: 8px;
-      font-size: 11px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase;
-      color: #7AA0FF; margin-bottom: 14px;
+    .feat h3 {
+      font-family: 'Bricolage Grotesque', sans-serif;
+      font-weight: 700; font-size: 16px; letter-spacing: -0.025em;
+      color: var(--text); margin-bottom: 8px; line-height: 1.3;
     }
-    .section-label::before { content: ''; width: 18px; height: 1.5px; background: var(--grad); display: inline-block; }
-    .section-title {
-      font-family: 'Bricolage Grotesque', sans-serif; font-weight: 800; font-size: 40px;
-      line-height: 1.05; letter-spacing: -0.04em; margin-bottom: 14px;
+    .feat p {
+      font-size: 13.5px; color: var(--muted); line-height: 1.65; font-weight: 400;
     }
-    .section-sub { font-size: 16.5px; color: var(--muted); line-height: 1.65; max-width: 500px; }
-
-    /* ── FEATURE CARDS ── */
-    .features-section { padding: 100px var(--pad); max-width: var(--max); margin: 0 auto; }
-    .features-header { text-align: center; margin-bottom: 60px; }
-    .features-header .section-sub { margin: 0 auto; }
-    .features-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 18px; }
-    .feature-card {
-      background: var(--card); border: 1px solid var(--border); border-radius: var(--r); padding: 28px;
-      transition: background .25s, border-color .25s, transform .25s; position: relative; overflow: hidden;
-    }
-    .feature-card::before {
-      content: ''; position: absolute; top: 0; left: 0; right: 0; height: 1px;
-      background: linear-gradient(90deg, transparent, rgba(59,110,255,0.45), transparent);
-      opacity: 0; transition: opacity .25s;
-    }
-    .feature-card:hover { background: var(--card-hover); border-color: var(--border-hi); transform: translateY(-5px); }
-    .feature-card:hover::before { opacity: 1; }
-    .fc-icon {
-      width: 44px; height: 44px; border-radius: 10px;
-      background: rgba(59,110,255,0.1); border: 1px solid rgba(59,110,255,0.2);
-      display: flex; align-items: center; justify-content: center; margin-bottom: 18px;
-    }
-    .fc-icon svg { width: 20px; height: 20px; }
-    .feature-card h3 { font-family: 'Bricolage Grotesque', sans-serif; font-weight: 700; font-size: 18px; letter-spacing: -0.03em; margin-bottom: 10px; }
-    .feature-card p { font-size: 14px; color: var(--muted); line-height: 1.65; }
-
-    /* ── BENTO SHOWCASE ── */
-    .showcase-section { padding: 0 var(--pad) 100px; max-width: var(--max); margin: 0 auto; }
-    .bento { display: grid; grid-template-columns: repeat(12,1fr); gap: 16px; }
-    .bc {
-      background: var(--card); border: 1px solid var(--border); border-radius: var(--r);
-      overflow: hidden; transition: border-color .25s, background .25s;
-    }
-    .bc:hover { border-color: var(--border-hi); background: var(--card-hover); }
-    .bc-main { grid-column: 1/8; min-height: 340px; }
-    .bc-side { grid-column: 8/13; min-height: 340px; }
-    .bc-left { grid-column: 1/7; min-height: 250px; }
-    .bc-right { grid-column: 7/13; min-height: 250px; }
-    .bcp { padding: 30px; height: 100%; display: flex; flex-direction: column; }
-    .bc-tag {
-      display: inline-block; font-size: 10px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase;
-      color: #7AA0FF; background: rgba(59,110,255,0.1); border: 1px solid rgba(59,110,255,0.2);
-      padding: 3px 10px; border-radius: 100px; margin-bottom: 14px; align-self: flex-start;
-    }
-    .bc-title { font-family: 'Bricolage Grotesque', sans-serif; font-weight: 700; font-size: 22px; letter-spacing: -0.03em; margin-bottom: 8px; line-height: 1.2; }
-    .bc-desc { font-size: 13.5px; color: var(--muted); line-height: 1.62; }
-
-    /* Scan demo widget */
-    .scan-demo { margin-top: 20px; }
-    .scan-box {
-      background: var(--surface); border: 1px solid var(--border); border-radius: 12px;
-      padding: 14px; position: relative; overflow: hidden;
-    }
-    .scan-vf {
-      aspect-ratio: 16/9; border: 2px solid rgba(59,110,255,0.35); border-radius: 8px;
-      position: relative; overflow: hidden; margin-bottom: 12px;
-      background: linear-gradient(135deg, #0b1525 0%, #0f1c30 100%);
-    }
-    .scan-beam {
-      position: absolute; left: 0; right: 0; height: 2px;
-      background: linear-gradient(90deg, transparent, var(--blue), var(--cyan), transparent);
-      box-shadow: 0 0 10px var(--blue);
-      animation: beam 2.2s ease-in-out infinite;
-    }
-    @keyframes beam { 0%{top:8%} 50%{top:88%} 100%{top:8%} }
-    .scan-corner { position: absolute; width: 18px; height: 18px; border-color: var(--blue); border-style: solid; }
-    .sc-tl { top:8px; left:8px; border-width:2px 0 0 2px; border-radius:3px 0 0 0; }
-    .sc-tr { top:8px; right:8px; border-width:2px 2px 0 0; border-radius:0 3px 0 0; }
-    .sc-bl { bottom:8px; left:8px; border-width:0 0 2px 2px; border-radius:0 0 0 3px; }
-    .sc-br { bottom:8px; right:8px; border-width:0 2px 2px 0; border-radius:0 0 3px 0; }
-    .scan-result {
-      background: var(--surface2); border: 1px solid var(--border); border-radius: 8px; padding: 10px 12px;
-      display: flex; justify-content: space-between; align-items: center;
-    }
-    .sr-left .sr-model { font-family: 'Bricolage Grotesque', sans-serif; font-size: 12px; font-weight: 700; }
-    .sr-left .sr-name { font-size: 10px; color: var(--muted); margin-top: 2px; }
-    .sr-price { font-family: 'Bricolage Grotesque', sans-serif; font-size: 14px; font-weight: 700; color: var(--cyan); }
-
-    /* Pricing demo widget */
-    .price-demo { margin-top: 20px; flex: 1; }
-    .pd-card { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 18px; }
-    .pd-chips { display: flex; gap: 6px; margin-bottom: 14px; }
-    .pd-chip { font-size: 11px; font-weight: 500; padding: 5px 12px; border-radius: 7px; }
-    .pd-chip.on { background: var(--blue); color: #fff; }
-    .pd-chip.off { background: var(--surface2); color: var(--muted); border: 1px solid var(--border); }
-    .pd-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
-    .pd-lbl { font-size: 11.5px; color: var(--muted); }
-    .pd-val { font-family: 'Bricolage Grotesque', sans-serif; font-size: 13px; font-weight: 700; }
-    .pd-sep { height: 1px; background: var(--border); margin: 12px 0; }
-    .pd-total { display: flex; justify-content: space-between; align-items: center; }
-    .pd-total-lbl { font-size: 12px; font-weight: 600; }
-    .pd-total-val {
-      font-family: 'Bricolage Grotesque', sans-serif; font-size: 24px; font-weight: 800; letter-spacing: -0.04em;
-      background: var(--grad); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
-    }
-
-    /* Dashboard demo widget */
-    .dash-demo { margin-top: 18px; flex: 1; }
-    .mini-stats { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 10px; }
-    .ms { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 12px; }
-    .ms-val { font-family: 'Bricolage Grotesque', sans-serif; font-weight: 800; font-size: 21px; letter-spacing: -0.04em; }
-    .ms-val.g { color: #34D399; }
-    .ms-lbl { font-size: 10px; color: var(--muted); margin-top: 2px; }
-    .mini-chart { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 12px; }
-    .mc-lbl { font-size: 10px; color: var(--muted); margin-bottom: 10px; }
-    .mc-bars { display: flex; align-items: flex-end; gap: 4px; height: 38px; }
-    .mb { flex: 1; border-radius: 3px 3px 0 0; background: rgba(59,110,255,0.18); }
-    .mb.hi { background: linear-gradient(180deg, var(--cyan) 0%, var(--blue) 100%); }
-
-    /* ── HOW IT WORKS ── */
-    .how-section {
-      background: var(--bg2); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);
-      padding: 100px var(--pad);
-    }
-    .how-wrap { max-width: var(--max); margin: 0 auto; }
-    .how-header { text-align: center; margin-bottom: 64px; }
-    .how-steps { display: grid; grid-template-columns: repeat(3,1fr); position: relative; }
-    .how-steps::before {
-      content: ''; position: absolute; top: 32px; left: 22%; right: 22%; height: 1px;
-      background: linear-gradient(90deg, var(--blue), var(--cyan)); opacity: 0.3;
-    }
-    .how-step { padding: 0 36px; text-align: center; }
-    .step-num {
-      width: 64px; height: 64px; margin: 0 auto 20px; border-radius: 50%;
-      background: var(--grad); display: flex; align-items: center; justify-content: center;
-      font-family: 'Bricolage Grotesque', sans-serif; font-weight: 800; font-size: 20px; color: #fff;
-      box-shadow: 0 0 28px rgba(59,110,255,0.4); position: relative; z-index: 1;
-    }
-    .how-step h3 { font-family: 'Bricolage Grotesque', sans-serif; font-weight: 700; font-size: 18px; letter-spacing: -0.03em; margin-bottom: 8px; }
-    .how-step p { font-size: 14px; color: var(--muted); line-height: 1.65; }
-
-    /* ── TESTIMONIALS ── */
-    .testi-section { padding: 100px var(--pad); max-width: var(--max); margin: 0 auto; }
-    .testi-header { text-align: center; margin-bottom: 52px; }
-    .testi-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 18px; }
-    .testi-card {
-      background: var(--card); border: 1px solid var(--border); border-radius: var(--r); padding: 28px;
-      transition: background .25s, border-color .25s, transform .25s;
-    }
-    .testi-card:hover { background: var(--card-hover); border-color: var(--border-hi); transform: translateY(-4px); }
-    .tc-stars { display: flex; gap: 2px; margin-bottom: 16px; }
-    .tc-stars svg { width: 13px; height: 13px; fill: #FBBF24; }
-    .tc-quote { font-size: 14px; color: var(--muted); line-height: 1.7; margin-bottom: 20px; font-style: italic; }
-    .tc-author { display: flex; align-items: center; gap: 10px; }
-    .tc-av {
-      width: 36px; height: 36px; border-radius: 50%;
-      background: var(--grad); display: flex; align-items: center; justify-content: center;
-      font-family: 'Bricolage Grotesque', sans-serif; font-weight: 700; font-size: 14px; color: #fff; flex-shrink: 0;
-    }
-    .tc-name { font-weight: 600; font-size: 13px; }
-    .tc-role { font-size: 11px; color: var(--muted); }
 
     /* ── FINAL CTA ── */
     .cta-section {
-      padding: 110px var(--pad); background: var(--bg2);
-      border-top: 1px solid var(--border); position: relative; overflow: hidden;
+      padding: 100px var(--pad);
+      text-align: center;
+      border-top: 1px solid var(--border);
     }
-    .cta-blob-1 { width: 550px; height: 550px; top: -260px; left: 50%; transform: translateX(-50%); }
-    .cta-blob-2 { width: 380px; height: 380px; bottom: -180px; right: -100px; background: radial-gradient(ellipse, rgba(0,196,255,0.1) 0%, transparent 70%) !important; }
-    .cta-inner { max-width: 580px; margin: 0 auto; text-align: center; position: relative; z-index: 1; }
-    .cta-badge {
-      display: inline-flex; align-items: center; gap: 7px;
-      padding: 5px 14px; border-radius: 100px;
-      background: rgba(59,110,255,0.1); border: 1px solid rgba(59,110,255,0.28);
-      font-size: 11px; font-weight: 600; color: var(--cyan);
-      letter-spacing: 0.06em; text-transform: uppercase; margin-bottom: 22px;
-    }
-    .cta-badge-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--cyan); box-shadow: 0 0 6px var(--cyan); }
+    .cta-inner { max-width: 480px; margin: 0 auto; }
     .cta-section h2 {
-      font-family: 'Bricolage Grotesque', sans-serif; font-weight: 800; font-size: 46px;
-      letter-spacing: -0.045em; line-height: 1.04; margin-bottom: 16px;
+      font-family: 'Bricolage Grotesque', sans-serif;
+      font-weight: 800; font-size: 38px; letter-spacing: -0.04em;
+      line-height: 1.08; color: var(--text); margin-bottom: 14px;
     }
-    .cta-section p { font-size: 17px; font-weight: 400; color: var(--muted); margin-bottom: 36px; line-height: 1.62; }
-    .btn-cta-main {
-      display: inline-flex; align-items: center; gap: 12px;
-      background: var(--grad); color: #fff;
-      padding: 16px 28px; border-radius: 16px; text-decoration: none;
-      transition: transform .2s, box-shadow .2s;
-      box-shadow: 0 8px 32px rgba(59,110,255,0.42);
-    }
-    .btn-cta-main:hover { transform: translateY(-3px); box-shadow: 0 14px 44px rgba(59,110,255,0.58); }
-    .btn-cta-main svg { width: 24px; height: 24px; flex-shrink: 0; }
-    .btn-cta-main-text { display: flex; flex-direction: column; text-align: left; }
-    .btn-cta-main-sub { font-size: 10px; font-weight: 400; opacity: .7; letter-spacing: 0.04em; }
-    .btn-cta-main-label { font-family: 'Bricolage Grotesque', sans-serif; font-weight: 700; font-size: 17px; letter-spacing: -0.02em; }
-    .cta-note { margin-top: 16px; font-size: 12px; color: var(--faint); }
+    .cta-section p { font-size: 16px; font-weight: 300; color: var(--muted); margin-bottom: 32px; }
+    .cta-note { margin-top: 14px; font-size: 12px; color: var(--faint); }
 
     /* ── FOOTER ── */
-    footer { border-top: 1px solid var(--border); padding: 44px var(--pad); background: var(--bg); }
-    .footer-wrap { max-width: var(--max); margin: 0 auto; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 16px; }
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 36px var(--pad);
+    }
+    .footer-inner {
+      max-width: var(--max); margin: 0 auto;
+      display: flex; align-items: center; justify-content: space-between;
+      flex-wrap: wrap; gap: 14px;
+    }
     .footer-logo { display: flex; align-items: center; gap: 8px; text-decoration: none; }
-    .footer-lm { width: 26px; height: 26px; background: var(--grad); border-radius: 6px; display: flex; align-items: center; justify-content: center; }
-    .footer-lm svg { width: 13px; height: 13px; }
-    .footer-name { font-family: 'Bricolage Grotesque', sans-serif; font-weight: 700; font-size: 15px; color: var(--text); letter-spacing: -0.03em; }
-    .footer-links { display: flex; gap: 24px; list-style: none; flex-wrap: wrap; }
+    .footer-mark { width: 22px; height: 22px; background: var(--blue); border-radius: 5px; display: flex; align-items: center; justify-content: center; }
+    .footer-mark svg { width: 11px; height: 11px; }
+    .footer-name { font-family: 'Bricolage Grotesque', sans-serif; font-weight: 700; font-size: 14px; color: var(--text); letter-spacing: -0.03em; }
+    .footer-links { display: flex; gap: 20px; list-style: none; flex-wrap: wrap; }
     .footer-links a { font-size: 13px; color: var(--muted); text-decoration: none; transition: color .15s; }
     .footer-links a:hover { color: var(--text); }
-    .footer-copy { font-size: 12px; color: var(--faint); width: 100%; }
-
-    /* ── VIDEO DEMO ── */
-    .demo-section {
-      padding: 100px var(--pad);
-      background: var(--bg2);
-      border-top: 1px solid var(--border);
-      border-bottom: 1px solid var(--border);
-    }
-    .demo-wrap { max-width: var(--max); margin: 0 auto; }
-    .demo-header { text-align: center; margin-bottom: 48px; }
-    .demo-video-wrap {
-      position: relative;
-    }
-    .demo-video-inner {
-      border-radius: 20px; overflow: hidden;
-      border: 1px solid var(--border);
-      box-shadow: 0 0 80px rgba(59,110,255,0.12), 0 40px 80px rgba(0,0,0,0.4);
-      position: relative;
-    }
-    .demo-video-inner::before {
-      content: '';
-      position: absolute; inset: 0; border-radius: 20px;
-      background: linear-gradient(135deg, rgba(59,110,255,0.06) 0%, transparent 60%);
-      pointer-events: none; z-index: 1;
-    }
-    .demo-video {
-      width: 100%; display: block;
-      background: var(--surface);
-    }
-
-    /* ── REVEAL ANIMATIONS ── */
-    .reveal { opacity: 0; transform: translateY(22px); transition: opacity .65s ease, transform .65s ease; }
-    .reveal.in { opacity: 1; transform: translateY(0); }
-    .rd1 { transition-delay: .08s; }
-    .rd2 { transition-delay: .16s; }
-    .rd3 { transition-delay: .24s; }
+    .footer-copy { width: 100%; font-size: 12px; color: var(--faint); }
 
     /* ── RESPONSIVE ── */
-    @media (max-width: 900px) {
-      .hero-wrap { grid-template-columns: 1fr; padding: 60px var(--pad) 44px; gap: 44px; }
-      .hero h1 { font-size: 38px; }
-      .hero-sub { font-size: 16px; }
-      .hero-device { order: -1; }
-      .hero-phone-img { width: 230px; }
-      .glow-ring-1 { width: 250px; height: 250px; }
-      .glow-ring-2 { width: 360px; height: 360px; }
-      .glow-ring-3 { display: none; }
-      .float-badge-1, .float-badge-2 { display: none; }
+    @media (max-width: 720px) {
+      .hero h1 { font-size: 36px; }
+      .hero-sub { font-size: 15.5px; }
       .features-grid { grid-template-columns: 1fr; }
-      .bc-main, .bc-side, .bc-left, .bc-right { grid-column: 1/-1; }
-      .how-steps { grid-template-columns: 1fr; gap: 40px; }
-      .how-steps::before { display: none; }
-      .testi-grid { grid-template-columns: 1fr; }
-      .stats-wrap { grid-template-columns: repeat(2,1fr); }
-      .stat-item { border-right: none; border-bottom: 1px solid var(--border); }
-      .stat-item:nth-child(odd) { border-right: 1px solid var(--border); }
-      .stat-item:last-child { border-bottom: none; }
-      .section-title { font-size: 32px; }
-      .cta-section h2 { font-size: 34px; }
+      .feat { border-right: none; border-bottom: 1px solid var(--border); }
+      .feat:last-child { border-bottom: none; }
       nav .nav-link { display: none; }
-      .nav-ghost { display: none; }
+      .cta-section h2 { font-size: 30px; }
     }
-    @media (max-width: 540px) {
-      .hero h1 { font-size: 32px; }
-      .section-title { font-size: 28px; }
+    @media (max-width: 480px) {
+      .hero h1 { font-size: 30px; }
     }
   </style>
 </head>
 <body>
 
-<!-- ── NAV ── -->
+<!-- NAV -->
 <nav>
-  <div class="nav-wrap">
+  <div class="nav-inner">
     <a href="/" class="nav-logo">
-      <div class="nav-logo-mark">
+      <div class="nav-mark">
         <svg viewBox="0 0 24 24" fill="none">
           <path stroke="white" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round" d="M7.5 4L4 4L4 7.5M16.5 4L20 4L20 7.5M7.5 20L4 20L4 16.5M16.5 20L20 20L20 16.5"/>
           <rect x="5.5" y="7.8" width="1.9" height="8.4" rx="0.3" fill="white"/>
@@ -536,357 +271,99 @@
           <rect x="16.5" y="7.8" width="1.9" height="8.4" rx="0.3" fill="white"/>
         </svg>
       </div>
-      <span class="nav-logo-name">LoadScan</span>
+      <span class="nav-wordmark">LoadScan</span>
     </a>
-    <div class="nav-right">
+    <div class="nav-links">
       <a href="#features" class="nav-link">Features</a>
-      <a href="#how" class="nav-link">How It Works</a>
       <a href="privacy.html" class="nav-link">Privacy</a>
-      <a href="/waitlist" class="nav-ghost">Join Waitlist</a>
-      <a href="https://apps.apple.com/us/app/loadscan/id6760682388" class="nav-cta">Download Free</a>
+      <a href="/waitlist" class="nav-link">Waitlist</a>
+      <a href="https://apps.apple.com/us/app/loadscan/id6760682388" class="nav-dl">Download</a>
     </div>
   </div>
 </nav>
 
-<!-- ── HERO ── -->
-<section class="hero-section">
-  <div class="aurora aurora-1"></div>
-  <div class="aurora aurora-2"></div>
-  <div class="aurora aurora-3"></div>
-  <div class="grid-bg"></div>
-
-  <div class="hero-wrap">
-    <div class="hero-text">
-      <div class="eyebrow"><span class="eyebrow-dot"></span>Built for iPhone · Free to download</div>
-      <h1>Turn sticker photos into <span class="grad-word">load manifests</span> in seconds.</h1>
-      <p class="hero-sub">LoadScan is the fastest way for appliance resellers to scan stickers, price loads, and keep intake records organized — all from your iPhone.</p>
-
-      <div class="cta-group">
-        <a href="https://apps.apple.com/us/app/loadscan/id6760682388" class="btn-store">
-          <svg viewBox="0 0 24 24" fill="black"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg>
-          <div class="btn-store-text">
-            <span class="btn-store-sub">Download on the</span>
-            <span class="btn-store-label">App Store</span>
-          </div>
-        </a>
-        <a href="/waitlist" class="btn-outline">
-          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
-          Join Waitlist
-        </a>
-      </div>
-
-      <div class="hero-proof">
-        <div class="proof-item">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-          Free to download
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-inner">
+    <span class="hero-label">iPhone · Appliance Resellers</span>
+    <h1>Save hours on every load you intake.</h1>
+    <p class="hero-sub">Scan appliance stickers, build load manifests, and price inventory — all from your iPhone. No spreadsheets.</p>
+    <div class="hero-actions">
+      <a href="https://apps.apple.com/us/app/loadscan/id6760682388" class="btn-primary">
+        <svg viewBox="0 0 24 24" fill="black"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg>
+        <div class="btn-primary-text">
+          <span class="btn-primary-sub">Download on the</span>
+          <span class="btn-primary-label">App Store</span>
         </div>
-        <div class="proof-pipe"></div>
-        <div class="proof-item">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
-          Memberships available
-        </div>
-        <div class="proof-pipe"></div>
-        <div class="proof-item">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="2" width="14" height="20" rx="2"/><line x1="12" y1="18" x2="12" y2="18"/></svg>
-          iPhone only
-        </div>
-      </div>
+      </a>
+      <a href="/waitlist" class="btn-secondary">Join the waitlist</a>
     </div>
-
-    <!-- Phone mockup -->
-    <div class="hero-device">
-      <div class="device-inner">
-        <div class="glow-ring glow-ring-1"></div>
-        <div class="glow-ring glow-ring-2"></div>
-        <div class="glow-ring glow-ring-3"></div>
-        <div class="phone-glow"></div>
-        <img src="Adobe Express - file.png" alt="LoadScan app on iPhone" class="hero-phone-img" />
-
-        <!-- Floating callout 1 -->
-        <div class="float-badge float-badge-1">
-          <div class="fb-val">3.2× faster</div>
-          <div class="fb-lbl">vs. manual intake</div>
-        </div>
-
-        <!-- Floating callout 2 -->
-        <div class="float-badge float-badge-2">
-          <div class="fb-val">$41.2k</div>
-          <div class="fb-lbl">Stock tracked live</div>
-        </div>
-      </div>
-    </div>
+    <p class="hero-note">Free to download. Memberships available.</p>
   </div>
 </section>
 
-<!-- ── STATS STRIP ── -->
-<div class="stats-strip">
-  <div class="stats-wrap">
-    <div class="stat-item reveal">
-      <span class="stat-val" data-count="3200">0</span>
-      <span class="stat-lbl">Appliances scanned</span>
-    </div>
-    <div class="stat-item reveal rd1">
-      <span class="stat-val" data-count="500" data-suffix="+">0</span>
-      <span class="stat-lbl">Loads processed</span>
-    </div>
-    <div class="stat-item reveal rd2">
-      <span class="stat-val" data-prefix="$" data-count="2400000" data-format="abbr">0</span>
-      <span class="stat-lbl">Inventory tracked</span>
-    </div>
-    <div class="stat-item reveal rd3">
-      <span class="stat-val">iPhone</span>
-      <span class="stat-lbl">Native iOS app</span>
-    </div>
-  </div>
+<!-- PHONE IMAGE -->
+<div class="device-section">
+  <img src="Adobe Express - file.png" alt="LoadScan app on iPhone" class="device-img" />
 </div>
 
-<!-- ── FEATURE CARDS ── -->
+<hr class="divide" />
+
+<!-- VIDEO -->
+<section class="video-section" id="demo">
+  <p class="video-label">See It In Action</p>
+  <h2 class="video-heading">Watch the full intake flow.</h2>
+  <div class="video-wrap">
+    <video src="loadscan-demo-v2.mp4" controls playsinline preload="metadata"></video>
+  </div>
+</section>
+
+<hr class="divide" />
+
+<!-- FEATURES -->
 <section class="features-section" id="features">
-  <div class="features-header reveal">
-    <div class="section-label">Why LoadScan</div>
-    <h2 class="section-title">Everything you need, nothing you don't.</h2>
-    <p class="section-sub">Built specifically for appliance resellers who need to move faster without losing accuracy.</p>
-  </div>
   <div class="features-grid">
-    <div class="feature-card reveal">
-      <div class="fc-icon">
-        <svg viewBox="0 0 24 24" fill="none" stroke="#3B6EFF" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><path d="M3 17h4v4M3 14h7"/></svg>
-      </div>
-      <h3>Instant sticker scanning</h3>
-      <p>Point your camera at any appliance label. LoadScan reads the model number and pulls relevant data so you can stop typing and start processing.</p>
+    <div class="feat">
+      <div class="feat-num">01</div>
+      <h3>Scan any appliance sticker</h3>
+      <p>Point your camera at the label. LoadScan reads the model number and logs it to your current load — no typing required.</p>
     </div>
-    <div class="feature-card reveal rd1">
-      <div class="fc-icon">
-        <svg viewBox="0 0 24 24" fill="none" stroke="#3B6EFF" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
-      </div>
-      <h3>Load-based pricing</h3>
-      <p>Enter your load cost and target margin once. LoadScan distributes pricing across the entire manifest automatically — no spreadsheet required.</p>
+    <div class="feat">
+      <div class="feat-num">02</div>
+      <h3>Price the load, not each item</h3>
+      <p>Enter your total load cost and target margin. LoadScan distributes pricing across the whole manifest automatically.</p>
     </div>
-    <div class="feature-card reveal rd2">
-      <div class="fc-icon">
-        <svg viewBox="0 0 24 24" fill="none" stroke="#3B6EFF" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
-      </div>
-      <h3>Live inventory dashboard</h3>
-      <p>See stock value, load count, and profit metrics in one place. No more hunting through notes or spreadsheets to understand what you have on hand.</p>
-    </div>
-    <div class="feature-card reveal">
-      <div class="fc-icon">
-        <svg viewBox="0 0 24 24" fill="none" stroke="#3B6EFF" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
-      </div>
-      <h3>Clean load manifests</h3>
-      <p>Every intake session builds a structured manifest you can review, export, or hand off — clean records from the very first scan.</p>
-    </div>
-    <div class="feature-card reveal rd1">
-      <div class="fc-icon">
-        <svg viewBox="0 0 24 24" fill="none" stroke="#3B6EFF" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
-      </div>
-      <h3>Fast, offline-ready</h3>
-      <p>LoadScan works where your loads are — warehouse floors, loading docks, or anywhere without strong signal. No internet required to scan and save.</p>
-    </div>
-    <div class="feature-card reveal rd2">
-      <div class="fc-icon">
-        <svg viewBox="0 0 24 24" fill="none" stroke="#3B6EFF" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-      </div>
-      <h3>Private by default</h3>
-      <p>Your inventory data stays on your device. No account, no cloud sync required. Your business data is yours — LoadScan doesn't collect or sell it.</p>
+    <div class="feat">
+      <div class="feat-num">03</div>
+      <h3>Track inventory in one place</h3>
+      <p>Stock value, load history, and item counts — visible at a glance without bouncing between notes and spreadsheets.</p>
     </div>
   </div>
 </section>
 
-<!-- ── BENTO SHOWCASE ── -->
-<section class="showcase-section">
-  <div class="bento">
+<hr class="divide" />
 
-    <!-- Scan -->
-    <div class="bc bc-main reveal">
-      <div class="bcp">
-        <span class="bc-tag">Scanning</span>
-        <div class="bc-title">From sticker photo to load data — in one tap.</div>
-        <div class="bc-desc">Skip the manual typing. LoadScan reads the appliance label and structures the data you need instantly.</div>
-        <div class="scan-demo">
-          <div class="scan-box">
-            <div class="scan-vf">
-              <div class="scan-beam"></div>
-              <div class="scan-corner sc-tl"></div>
-              <div class="scan-corner sc-tr"></div>
-              <div class="scan-corner sc-bl"></div>
-              <div class="scan-corner sc-br"></div>
-            </div>
-            <div class="scan-result">
-              <div class="sr-left">
-                <div class="sr-model">WRF535SWHZ</div>
-                <div class="sr-name">Whirlpool 25 cu.ft. French Door Refrigerator</div>
-              </div>
-              <div class="sr-price">MSRP $1,649</div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- Pricing -->
-    <div class="bc bc-side reveal rd1">
-      <div class="bcp">
-        <span class="bc-tag">Pricing</span>
-        <div class="bc-title">Price the whole load, not just one item.</div>
-        <div class="bc-desc">Set load cost and margin once. LoadScan handles the math across every item in the manifest.</div>
-        <div class="price-demo">
-          <div class="pd-card">
-            <div class="pd-chips">
-              <div class="pd-chip off">Per Item</div>
-              <div class="pd-chip on">Load Based</div>
-            </div>
-            <div class="pd-row"><span class="pd-lbl">Load Cost</span><span class="pd-val">$4,200.00</span></div>
-            <div class="pd-row"><span class="pd-lbl">Target Margin</span><span class="pd-val">35%</span></div>
-            <div class="pd-row"><span class="pd-lbl">Items in Load</span><span class="pd-val">14</span></div>
-            <div class="pd-sep"></div>
-            <div class="pd-total">
-              <span class="pd-total-lbl">Projected Revenue</span>
-              <span class="pd-total-val">$6,461</span>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- Dashboard -->
-    <div class="bc bc-left reveal">
-      <div class="bcp">
-        <span class="bc-tag">Dashboard</span>
-        <div class="bc-title">Your whole inventory, at a glance.</div>
-        <div class="bc-desc">Stock value, load count, and net profit — always visible.</div>
-        <div class="dash-demo">
-          <div class="mini-stats">
-            <div class="ms"><div class="ms-val">$41.2k</div><div class="ms-lbl">Stock Value</div></div>
-            <div class="ms"><div class="ms-val g">$6.8k</div><div class="ms-lbl">Net Profit</div></div>
-            <div class="ms"><div class="ms-val">147</div><div class="ms-lbl">Items in Stock</div></div>
-            <div class="ms"><div class="ms-val">8</div><div class="ms-lbl">Loads Sold</div></div>
-          </div>
-          <div class="mini-chart">
-            <div class="mc-lbl">Revenue — last 6 loads</div>
-            <div class="mc-bars">
-              <div class="mb" style="height:42%"></div>
-              <div class="mb" style="height:63%"></div>
-              <div class="mb" style="height:55%"></div>
-              <div class="mb hi" style="height:88%"></div>
-              <div class="mb" style="height:70%"></div>
-              <div class="mb" style="height:78%"></div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- Manifests -->
-    <div class="bc bc-right reveal rd1">
-      <div class="bcp">
-        <span class="bc-tag">Manifests</span>
-        <div class="bc-title">Clean records from the first scan.</div>
-        <div class="bc-desc">Every intake session generates a structured manifest — reviewable, shareable, always up to date.</div>
-        <div style="margin-top:20px; display:flex; flex-direction:column; gap:8px;">
-          <div style="background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:12px 14px;display:flex;justify-content:space-between;align-items:center;">
-            <div>
-              <div style="font-family:'Bricolage Grotesque',sans-serif;font-weight:700;font-size:13px;">Load #24 — May Restock</div>
-              <div style="font-size:11px;color:var(--muted);margin-top:2px;">14 items · $6,461 projected</div>
-            </div>
-            <div style="font-size:11px;font-weight:600;color:#34D399;background:rgba(52,211,153,0.1);border:1px solid rgba(52,211,153,0.2);padding:3px 9px;border-radius:6px;">Active</div>
-          </div>
-          <div style="background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:12px 14px;display:flex;justify-content:space-between;align-items:center;">
-            <div>
-              <div style="font-family:'Bricolage Grotesque',sans-serif;font-weight:700;font-size:13px;">Load #23 — April Surplus</div>
-              <div style="font-size:11px;color:var(--muted);margin-top:2px;">22 items · $9,840 sold</div>
-            </div>
-            <div style="font-size:11px;font-weight:600;color:var(--muted);background:var(--surface2);border:1px solid var(--border);padding:3px 9px;border-radius:6px;">Sold</div>
-          </div>
-          <div style="background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:12px 14px;display:flex;justify-content:space-between;align-items:center;">
-            <div>
-              <div style="font-family:'Bricolage Grotesque',sans-serif;font-weight:700;font-size:13px;">Load #22 — March Bulk</div>
-              <div style="font-size:11px;color:var(--muted);margin-top:2px;">18 items · $7,200 sold</div>
-            </div>
-            <div style="font-size:11px;font-weight:600;color:var(--muted);background:var(--surface2);border:1px solid var(--border);padding:3px 9px;border-radius:6px;">Sold</div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-  </div>
-</section>
-
-<!-- ── HOW IT WORKS ── -->
-<section class="how-section" id="how">
-  <div class="how-wrap">
-    <div class="how-header reveal">
-      <div class="section-label">How It Works</div>
-      <h2 class="section-title">Up and running in under 60 seconds.</h2>
-      <p class="section-sub" style="margin:0 auto;">No training. No setup. Just download and start scanning your next load.</p>
-    </div>
-    <div class="how-steps">
-      <div class="how-step reveal">
-        <div class="step-num">1</div>
-        <h3>Download LoadScan</h3>
-        <p>Free on the App Store. No account, no subscription required to get started.</p>
-      </div>
-      <div class="how-step reveal rd1">
-        <div class="step-num">2</div>
-        <h3>Scan your appliances</h3>
-        <p>Point your camera at the sticker. The app reads the model and logs it to your current load manifest.</p>
-      </div>
-      <div class="how-step reveal rd2">
-        <div class="step-num">3</div>
-        <h3>Price it &amp; move on</h3>
-        <p>Set your load cost and margin. LoadScan distributes pricing automatically so your manifest is ready to review or share.</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ── TESTIMONIALS ── -->
-<!-- ── VIDEO DEMO ── -->
-<section class="demo-section">
-  <div class="demo-wrap">
-    <div class="demo-header reveal">
-      <div class="section-label">See It In Action</div>
-      <h2 class="section-title">Watch LoadScan do its thing.</h2>
-      <p class="section-sub" style="margin:0 auto;">From sticker scan to priced manifest — see exactly how fast intake can be.</p>
-    </div>
-    <div class="demo-video-wrap reveal">
-      <div class="demo-video-inner">
-        <video
-          src="loadscan-demo-v2.mp4"
-          controls
-          playsinline
-          preload="metadata"
-          class="demo-video"
-        ></video>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ── FINAL CTA ── -->
+<!-- CTA -->
 <section class="cta-section">
-  <div class="aurora cta-blob-1" style="background:radial-gradient(ellipse, rgba(59,110,255,0.18) 0%, transparent 70%);"></div>
-  <div class="aurora cta-blob-2"></div>
-  <div class="cta-inner reveal">
-    <div class="cta-badge"><span class="cta-badge-dot"></span>Free on the App Store</div>
-    <h2>Stop logging loads by hand. <span class="grad-word">Start scanning.</span></h2>
-    <p>LoadScan is free to download and takes less than a minute to set up. Your next intake session can be the fastest one you've ever run.</p>
-    <a href="https://apps.apple.com/us/app/loadscan/id6760682388" class="btn-cta-main">
-      <svg viewBox="0 0 24 24" fill="white"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg>
-      <div class="btn-cta-main-text">
-        <span class="btn-cta-main-sub">Download on the</span>
-        <span class="btn-cta-main-label">App Store — Free</span>
+  <div class="cta-inner">
+    <h2>Start your next load the right way.</h2>
+    <p>Download LoadScan and run a faster intake session today.</p>
+    <a href="https://apps.apple.com/us/app/loadscan/id6760682388" class="btn-primary" style="margin: 0 auto; display: inline-flex;">
+      <svg viewBox="0 0 24 24" fill="black"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg>
+      <div class="btn-primary-text">
+        <span class="btn-primary-sub">Download on the</span>
+        <span class="btn-primary-label">App Store</span>
       </div>
     </a>
     <p class="cta-note">iPhone only · Free to download · Memberships available</p>
   </div>
 </section>
 
-<!-- ── FOOTER ── -->
+<!-- FOOTER -->
 <footer>
-  <div class="footer-wrap">
+  <div class="footer-inner">
     <a href="/" class="footer-logo">
-      <div class="footer-lm">
+      <div class="footer-mark">
         <svg viewBox="0 0 24 24" fill="none">
           <path stroke="white" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round" d="M7.5 4L4 4L4 7.5M16.5 4L20 4L20 7.5M7.5 20L4 20L4 16.5M16.5 20L20 20L20 16.5"/>
           <rect x="8" y="8" width="1.6" height="8" rx="0.3" fill="white"/>
@@ -899,8 +376,8 @@
       <span class="footer-name">LoadScan</span>
     </a>
     <ul class="footer-links">
-      <li><a href="privacy.html">Privacy Policy</a></li>
-      <li><a href="terms.html">Terms of Service</a></li>
+      <li><a href="privacy.html">Privacy</a></li>
+      <li><a href="terms.html">Terms</a></li>
       <li><a href="help.html">Help</a></li>
       <li><a href="mailto:support@load-scan.com">Support</a></li>
     </ul>
@@ -908,47 +385,5 @@
   </div>
 </footer>
 
-<script>
-  // ── SCROLL REVEAL ──
-  const reveals = document.querySelectorAll('.reveal');
-  const io = new IntersectionObserver((entries) => {
-    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } });
-  }, { threshold: 0.12 });
-  reveals.forEach(el => io.observe(el));
-
-  // ── COUNTER ANIMATION ──
-  function animateCount(el) {
-    const target = parseInt(el.dataset.count);
-    const prefix = el.dataset.prefix || '';
-    const suffix = el.dataset.suffix || '';
-    const format = el.dataset.format;
-    const duration = 1800;
-    const start = performance.now();
-    function frame(now) {
-      const progress = Math.min((now - start) / duration, 1);
-      const ease = 1 - Math.pow(1 - progress, 3);
-      const val = Math.round(ease * target);
-      let display = val;
-      if (format === 'abbr') {
-        display = val >= 1000000 ? '$' + (val / 1000000).toFixed(1) + 'M' : '$' + Math.round(val / 1000) + 'k';
-        el.textContent = display;
-      } else {
-        el.textContent = prefix + val.toLocaleString() + suffix;
-      }
-      if (progress < 1) requestAnimationFrame(frame);
-    }
-    requestAnimationFrame(frame);
-  }
-
-  const countIO = new IntersectionObserver((entries) => {
-    entries.forEach(e => {
-      if (e.isIntersecting && e.target.dataset.count) {
-        animateCount(e.target);
-        countIO.unobserve(e.target);
-      }
-    });
-  }, { threshold: 0.5 });
-  document.querySelectorAll('[data-count]').forEach(el => countIO.observe(el));
-</script>
 </body>
 </html>
