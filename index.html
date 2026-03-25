@@ -43,6 +43,49 @@
       overflow-x: hidden;
     }
 
+    /* ── SCAN BACKGROUND ── */
+    /* Faint horizontal scan-line texture across the whole page */
+    body::before {
+      content: '';
+      position: fixed; inset: 0;
+      background: repeating-linear-gradient(
+        0deg,
+        rgba(255,255,255,0.018) 0px,
+        rgba(255,255,255,0.018) 1px,
+        transparent 1px,
+        transparent 5px
+      );
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* Moving scan beam */
+    .scan-beam {
+      position: fixed;
+      left: 0; right: 0; top: 0;
+      height: 220px;
+      background: linear-gradient(
+        to bottom,
+        transparent 0%,
+        rgba(59,110,255,0.025) 35%,
+        rgba(59,110,255,0.07)  47%,
+        rgba(100,160,255,0.16) 50%,
+        rgba(59,110,255,0.07)  53%,
+        rgba(59,110,255,0.025) 65%,
+        transparent 100%
+      );
+      pointer-events: none;
+      z-index: 0;
+      animation: scanDown 12s linear infinite;
+    }
+    @keyframes scanDown {
+      0%   { transform: translateY(-220px); }
+      100% { transform: translateY(100vh); }
+    }
+
+    /* Lift all real content above the scan overlay */
+    nav, section, .device-section, hr.divide, footer { position: relative; z-index: 1; }
+
     /* ── NAV ── */
     nav {
       position: fixed; top: 0; left: 0; right: 0; z-index: 100;
@@ -252,6 +295,8 @@
   </style>
 </head>
 <body>
+
+<div class="scan-beam" aria-hidden="true"></div>
 
 <!-- NAV -->
 <nav>
