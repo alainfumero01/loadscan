@@ -176,8 +176,10 @@
     }
     .device-img {
       width: 260px;
-      filter: drop-shadow(0 32px 48px rgba(0,0,0,0.5));
+      mix-blend-mode: multiply;
+      filter: drop-shadow(0 32px 56px rgba(0,0,0,0.6));
       animation: float 5s ease-in-out infinite;
+      transform: translateZ(0);
     }
     @keyframes float {
       0%, 100% { transform: translateY(0); }
