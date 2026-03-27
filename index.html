@@ -169,22 +169,37 @@
       margin-top: 18px; font-size: 12px; color: var(--faint);
     }
 
-    /* ── PHONE IMAGE ── */
-    .device-section {
+    /* ── SCREENSHOTS ── */
+    .screenshots-section {
       padding: 0 var(--pad) 80px;
-      display: flex; justify-content: center;
+      overflow: hidden;
     }
-    .device-img {
-      width: 260px;
-      mix-blend-mode: multiply;
-      filter: drop-shadow(0 32px 56px rgba(0,0,0,0.6));
-      animation: float 5s ease-in-out infinite;
-      transform: translateZ(0);
+    .screenshots-grid {
+      max-width: var(--max); margin: 0 auto;
+      display: flex; align-items: flex-end; justify-content: center;
+      gap: 14px;
     }
-    @keyframes float {
-      0%, 100% { transform: translateY(0); }
-      50% { transform: translateY(-10px); }
+    .sc {
+      width: 260px; flex-shrink: 0;
+      border-radius: 32px;
+      box-shadow: 0 24px 56px rgba(0,0,0,0.55);
+      display: block;
+      transition: transform .35s ease, box-shadow .35s ease;
     }
+    .sc-side {
+      width: 228px;
+      opacity: 0.88;
+    }
+    .sc-center {
+      transform: translateY(-28px);
+      box-shadow: 0 32px 72px rgba(0,0,0,0.65);
+    }
+    .sc:hover {
+      transform: translateY(-8px);
+      opacity: 1;
+      box-shadow: 0 32px 64px rgba(0,0,0,0.65);
+    }
+    .sc-center:hover { transform: translateY(-36px); }
 
     /* ── DIVIDER ── */
     hr.divide {
@@ -276,6 +291,9 @@
 
     /* ── RESPONSIVE ── */
     @media (max-width: 720px) {
+      .sc-side { display: none; }
+      .sc-center { width: 260px; transform: none; }
+      .sc-center:hover { transform: translateY(-8px); }
       .hero h1 { font-size: 36px; }
       .hero-sub { font-size: 15.5px; }
       .feat { grid-template-columns: 32px 1fr; grid-template-rows: auto auto; gap: 0 20px; }
@@ -315,7 +333,6 @@
     <div class="nav-links">
       <a href="#features" class="nav-link">Features</a>
       <a href="privacy.html" class="nav-link">Privacy</a>
-      <a href="/waitlist" class="nav-link">Waitlist</a>
       <a href="https://apps.apple.com/us/app/loadscan/id6760682388" class="nav-dl">Download</a>
     </div>
   </div>
@@ -335,15 +352,18 @@
           <span class="btn-primary-label">App Store</span>
         </div>
       </a>
-      <a href="/waitlist" class="btn-secondary">Join the waitlist</a>
     </div>
-    <p class="hero-note">Free to download. Memberships available.</p>
+    <p class="hero-note">Free to download · Memberships available</p>
   </div>
 </section>
 
-<!-- PHONE IMAGE -->
-<div class="device-section">
-  <img src="Adobe Express - file.png" alt="LoadScan app on iPhone" class="device-img" />
+<!-- SCREENSHOTS -->
+<div class="screenshots-section">
+  <div class="screenshots-grid">
+    <img src="screenshot-1.png" alt="LoadScan — Track Loads and Inventory" class="sc sc-side" />
+    <img src="screenshot-2.png" alt="LoadScan — New Load Manifest" class="sc sc-center" />
+    <img src="screenshot-3.png" alt="LoadScan — Inventory Dashboard" class="sc sc-side" />
+  </div>
 </div>
 
 <hr class="divide" />

@@ -21,8 +21,6 @@
       --border:   rgba(255,255,255,0.07);
       --border-hi:rgba(59,110,255,0.4);
       --blue:     #3B6EFF;
-      --cyan:     #00C4FF;
-      --grad:     linear-gradient(135deg, #3B6EFF 0%, #00C4FF 100%);
       --text:     #FFFFFF;
       --muted:    rgba(255,255,255,0.52);
       --faint:    rgba(255,255,255,0.28);
@@ -128,7 +126,7 @@
       padding-left: 20px; position: relative;
     }
     .policy ul li::before { content: '—'; position: absolute; left: 0; color: var(--faint); }
-    .policy a { color: #7AA0FF; text-decoration: none; }
+    .policy a { color: rgba(240,242,247,0.75); text-decoration: underline; text-underline-offset: 3px; text-decoration-color: var(--border); }
     .policy a:hover { text-decoration: underline; }
     strong { font-weight: 600; color: var(--text); }
 
