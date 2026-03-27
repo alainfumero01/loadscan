@@ -8,101 +8,205 @@
   <meta name="description" content="Get help with LoadScan — scanning appliances, building manifests, subscriptions, and more."/>
   <link rel="preconnect" href="https://fonts.googleapis.com"/>
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
-  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,700;12..96,800&family=DM+Sans:opsz,wght@9..40,400;9..40,500&display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Inter:wght@300;400;500&display=swap" rel="stylesheet"/>
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
     :root {
-      --blue: #2550DB; --blue-dim: #EEF2FF; --navy: #0C1340;
-      --text: #111520; --muted: #6B7280; --faint: #9CA3AF;
-      --border: #E5E9F4; --bg: #FFFFFF; --bg2: #F8F9FC;
-      --max: 780px; --pad: 24px;
+      --bg:      #080A0F;
+      --surface: #0D1117;
+      --surface2:#111820;
+      --border:  rgba(255,255,255,0.07);
+      --blue:    #3B6EFF;
+      --text:    #F0F2F7;
+      --muted:   rgba(240,242,247,0.48);
+      --faint:   rgba(240,242,247,0.26);
+      --max:     800px;
+      --pad:     24px;
     }
+
     html { scroll-behavior: smooth; }
-    body { font-family: 'DM Sans', sans-serif; color: var(--text); background: var(--bg2); -webkit-font-smoothing: antialiased; line-height: 1.65; }
+    body {
+      font-family: 'Inter', sans-serif;
+      color: var(--text); background: var(--bg);
+      -webkit-font-smoothing: antialiased; line-height: 1.65;
+    }
 
-    /* NAV */
-    nav { position: sticky; top: 0; z-index: 100; background: rgba(255,255,255,0.92); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); border-bottom: 1px solid var(--border); }
-    .nav-wrap { max-width: 1080px; margin: 0 auto; padding: 0 var(--pad); height: 58px; display: flex; align-items: center; justify-content: space-between; }
+    /* Scan-line texture */
+    body::before {
+      content: ''; position: fixed; inset: 0;
+      background: repeating-linear-gradient(0deg, rgba(255,255,255,0.018) 0px, rgba(255,255,255,0.018) 1px, transparent 1px, transparent 5px);
+      pointer-events: none; z-index: 0;
+    }
+    .scan-beam {
+      position: fixed; left: 0; right: 0; top: 0; height: 220px;
+      background: linear-gradient(to bottom, transparent 0%, rgba(59,110,255,0.025) 35%, rgba(59,110,255,0.07) 47%, rgba(100,160,255,0.16) 50%, rgba(59,110,255,0.07) 53%, rgba(59,110,255,0.025) 65%, transparent 100%);
+      pointer-events: none; z-index: 0;
+      animation: scanDown 12s linear infinite;
+    }
+    @keyframes scanDown { 0% { transform: translateY(-220px); } 100% { transform: translateY(100vh); } }
+    nav, .page-hero, .page, footer { position: relative; z-index: 1; }
+
+    /* ── NAV ── */
+    nav {
+      position: sticky; top: 0; z-index: 100;
+      background: rgba(8,10,15,0.85);
+      backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-inner {
+      max-width: 1040px; margin: 0 auto; padding: 0 var(--pad);
+      height: 58px; display: flex; align-items: center; justify-content: space-between;
+    }
     .nav-logo { display: flex; align-items: center; gap: 9px; text-decoration: none; }
-    .nav-logo-mark { width: 30px; height: 30px; background: var(--blue); border-radius: 7px; display: flex; align-items: center; justify-content: center; }
-    .nav-logo-mark svg { width: 16px; height: 16px; }
-    .nav-logo-name { font-family: 'Bricolage Grotesque', sans-serif; font-weight: 700; font-size: 16px; color: var(--text); letter-spacing: -0.03em; }
-    .nav-back { font-size: 13.5px; color: var(--muted); text-decoration: none; display: flex; align-items: center; gap: 5px; transition: color .15s; }
-    .nav-back:hover { color: var(--text); }
+    .nav-mark { width: 28px; height: 28px; background: var(--blue); border-radius: 7px; display: flex; align-items: center; justify-content: center; }
+    .nav-mark svg { width: 15px; height: 15px; }
+    .nav-wordmark { font-family: 'Bricolage Grotesque', sans-serif; font-weight: 700; font-size: 16px; color: var(--text); letter-spacing: -0.03em; }
+    .nav-back {
+      font-size: 13.5px; font-weight: 500; color: var(--muted); text-decoration: none;
+      display: flex; align-items: center; gap: 6px;
+      padding: 6px 13px; border-radius: 8px; border: 1px solid var(--border);
+      transition: color .15s, border-color .15s;
+    }
+    .nav-back:hover { color: var(--text); border-color: rgba(255,255,255,0.18); }
+    .nav-back svg { width: 14px; height: 14px; }
 
-    /* HERO */
-    .hero { background: var(--navy); padding: 60px var(--pad) 52px; text-align: center; }
-    .hero-eyebrow { display: inline-block; font-size: 11px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(255,255,255,0.5); margin-bottom: 14px; }
-    .hero h1 { font-family: 'Bricolage Grotesque', sans-serif; font-size: clamp(28px, 5vw, 42px); font-weight: 800; color: #fff; letter-spacing: -0.03em; line-height: 1.15; margin-bottom: 14px; }
-    .hero p { font-size: 16px; color: rgba(255,255,255,0.6); max-width: 480px; margin: 0 auto 28px; }
-    .hero-search { position: relative; max-width: 460px; margin: 0 auto; }
-    .hero-search input { width: 100%; padding: 13px 18px 13px 44px; border-radius: 12px; border: none; font-size: 15px; font-family: 'DM Sans', sans-serif; background: rgba(255,255,255,0.1); color: #fff; outline: none; }
-    .hero-search input::placeholder { color: rgba(255,255,255,0.4); }
-    .hero-search input:focus { background: rgba(255,255,255,0.15); }
-    .hero-search svg { position: absolute; left: 14px; top: 50%; transform: translateY(-50%); opacity: 0.5; pointer-events: none; }
+    /* ── PAGE HERO ── */
+    .page-hero {
+      background: var(--surface); border-bottom: 1px solid var(--border);
+      padding: 64px var(--pad) 52px; text-align: center;
+    }
+    .hero-eyebrow {
+      display: inline-block; font-size: 11.5px; font-weight: 500;
+      letter-spacing: 0.08em; text-transform: uppercase;
+      color: var(--muted); margin-bottom: 16px;
+    }
+    .page-hero h1 {
+      font-family: 'Bricolage Grotesque', sans-serif;
+      font-size: clamp(28px, 5vw, 40px); font-weight: 800;
+      color: var(--text); letter-spacing: -0.04em; line-height: 1.1; margin-bottom: 12px;
+    }
+    .page-hero p { font-size: 16px; color: var(--muted); max-width: 420px; margin: 0 auto 28px; font-weight: 300; }
 
-    /* MAIN */
-    .page { max-width: var(--max); margin: 0 auto; padding: 52px var(--pad) 80px; }
+    /* Search */
+    .hero-search { position: relative; max-width: 440px; margin: 0 auto; }
+    .hero-search svg { position: absolute; left: 14px; top: 50%; transform: translateY(-50%); opacity: 0.4; pointer-events: none; }
+    .hero-search input {
+      width: 100%; padding: 13px 18px 13px 44px;
+      background: var(--bg); border: 1px solid var(--border);
+      border-radius: 11px; font-size: 14.5px; font-family: 'Inter', sans-serif;
+      color: var(--text); outline: none;
+      transition: border-color .15s, box-shadow .15s;
+    }
+    .hero-search input::placeholder { color: var(--faint); }
+    .hero-search input:focus { border-color: rgba(59,110,255,0.5); box-shadow: 0 0 0 3px rgba(59,110,255,0.1); }
 
-    /* CATEGORY NAV */
-    .cat-nav { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 40px; }
-    .cat-btn { font-size: 13px; font-weight: 500; padding: 7px 14px; border-radius: 20px; border: 1.5px solid var(--border); background: var(--bg); color: var(--muted); cursor: pointer; transition: all .15s; white-space: nowrap; }
-    .cat-btn:hover, .cat-btn.active { background: var(--blue); border-color: var(--blue); color: #fff; }
+    /* ── MAIN ── */
+    .page { max-width: var(--max); margin: 0 auto; padding: 48px var(--pad) 80px; }
 
-    /* SECTIONS */
-    .section { margin-bottom: 48px; }
-    .section-header { display: flex; align-items: center; gap: 10px; margin-bottom: 16px; }
-    .section-icon { width: 34px; height: 34px; border-radius: 9px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
-    .section-title { font-family: 'Bricolage Grotesque', sans-serif; font-size: 18px; font-weight: 700; letter-spacing: -0.02em; }
+    /* Category pills */
+    .cat-nav { display: flex; gap: 7px; flex-wrap: wrap; margin-bottom: 40px; }
+    .cat-btn {
+      font-size: 13px; font-weight: 500; padding: 6px 14px;
+      border-radius: 100px; border: 1px solid var(--border);
+      background: transparent; color: var(--muted);
+      cursor: pointer; transition: all .15s; white-space: nowrap;
+      font-family: 'Inter', sans-serif;
+    }
+    .cat-btn:hover { color: var(--text); border-color: rgba(255,255,255,0.18); }
+    .cat-btn.active { background: var(--blue); border-color: var(--blue); color: #fff; }
 
-    /* ACCORDION */
-    .accordion { border: 1px solid var(--border); border-radius: 14px; overflow: hidden; background: var(--bg); }
+    /* Sections */
+    .section { margin-bottom: 44px; }
+    .section-header { display: flex; align-items: center; gap: 10px; margin-bottom: 14px; }
+    .section-icon { width: 32px; height: 32px; border-radius: 8px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; background: rgba(255,255,255,0.05); border: 1px solid var(--border); }
+    .section-title { font-family: 'Bricolage Grotesque', sans-serif; font-size: 17px; font-weight: 700; letter-spacing: -0.025em; }
+
+    /* Accordion */
+    .accordion { border: 1px solid var(--border); border-radius: 12px; overflow: hidden; }
     .accordion-item + .accordion-item { border-top: 1px solid var(--border); }
-    .accordion-q { width: 100%; text-align: left; background: none; border: none; padding: 17px 20px; font-size: 14.5px; font-weight: 500; color: var(--text); font-family: 'DM Sans', sans-serif; cursor: pointer; display: flex; align-items: center; justify-content: space-between; gap: 12px; transition: background .12s; }
-    .accordion-q:hover { background: var(--bg2); }
-    .accordion-q.open { color: var(--blue); }
-    .chevron { width: 16px; height: 16px; flex-shrink: 0; transition: transform .2s; color: var(--faint); }
-    .accordion-q.open .chevron { transform: rotate(180deg); color: var(--blue); }
-    .accordion-a { display: none; padding: 0 20px 18px; font-size: 14px; color: var(--muted); line-height: 1.75; }
+    .accordion-q {
+      width: 100%; text-align: left; background: var(--surface);
+      border: none; padding: 16px 20px;
+      font-size: 14px; font-weight: 500; color: var(--text);
+      font-family: 'Inter', sans-serif; cursor: pointer;
+      display: flex; align-items: center; justify-content: space-between; gap: 12px;
+      transition: background .12s;
+    }
+    .accordion-q:hover { background: var(--surface2); }
+    .accordion-q.open { color: #7AA0FF; background: var(--surface2); }
+    .chevron { width: 15px; height: 15px; flex-shrink: 0; transition: transform .2s; color: var(--faint); }
+    .accordion-q.open .chevron { transform: rotate(180deg); color: #7AA0FF; }
+    .accordion-a {
+      display: none; padding: 0 20px 18px;
+      font-size: 13.5px; color: var(--muted); line-height: 1.78;
+      background: var(--surface2);
+    }
     .accordion-a.open { display: block; }
     .accordion-a p + p { margin-top: 10px; }
     .accordion-a ul { margin: 8px 0 0 18px; }
     .accordion-a li { margin-bottom: 5px; }
-    .accordion-a a { color: var(--blue); text-decoration: none; }
-    .accordion-a a:hover { text-decoration: underline; }
-    .tag { display: inline-block; font-size: 11px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; padding: 2px 7px; border-radius: 4px; margin-right: 4px; }
-    .tag-free { background: #FEF9C3; color: #854D0E; }
-    .tag-pro { background: #DBEAFE; color: #1D4ED8; }
-    .tag-enterprise { background: #F3E8FF; color: #7E22CE; }
+    .accordion-a strong { color: var(--text); font-weight: 500; }
+    .accordion-a a { color: rgba(240,242,247,0.75); text-decoration: underline; text-underline-offset: 3px; text-decoration-color: var(--border); }
+    .accordion-a a:hover { color: var(--text); }
 
-    /* CONTACT CARD */
-    .contact-card { background: var(--navy); border-radius: 16px; padding: 36px 32px; display: flex; align-items: center; justify-content: space-between; gap: 24px; flex-wrap: wrap; margin-top: 48px; }
-    .contact-card h3 { font-family: 'Bricolage Grotesque', sans-serif; font-size: 20px; font-weight: 700; color: #fff; letter-spacing: -0.02em; margin-bottom: 6px; }
-    .contact-card p { font-size: 14px; color: rgba(255,255,255,0.55); }
-    .contact-btn { display: inline-block; padding: 11px 22px; background: var(--blue); color: #fff; font-size: 14px; font-weight: 500; border-radius: 9px; text-decoration: none; white-space: nowrap; transition: opacity .15s; }
-    .contact-btn:hover { opacity: 0.88; }
+    /* Plan tags */
+    .tag { display: inline-block; font-size: 10.5px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; padding: 2px 7px; border-radius: 4px; margin-right: 4px; }
+    .tag-free       { background: rgba(234,179,8,0.12);  color: #FCD34D; border: 1px solid rgba(234,179,8,0.2); }
+    .tag-pro        { background: rgba(59,110,255,0.12); color: #7AA0FF; border: 1px solid rgba(59,110,255,0.25); }
+    .tag-enterprise { background: rgba(168,85,247,0.12); color: #C084FC; border: 1px solid rgba(168,85,247,0.25); }
 
-    /* NO RESULTS */
+    /* No results */
     .no-results { display: none; text-align: center; padding: 48px 0; color: var(--muted); }
-    .no-results svg { margin: 0 auto 14px; display: block; opacity: 0.3; }
+    .no-results svg { margin: 0 auto 14px; display: block; opacity: 0.25; }
+
+    /* Contact card */
+    .contact-card {
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: 14px; padding: 32px 28px;
+      display: flex; align-items: center; justify-content: space-between;
+      gap: 24px; flex-wrap: wrap; margin-top: 44px;
+    }
+    .contact-card h3 { font-family: 'Bricolage Grotesque', sans-serif; font-size: 18px; font-weight: 700; letter-spacing: -0.03em; margin-bottom: 4px; }
+    .contact-card p { font-size: 13.5px; color: var(--muted); }
+    .contact-btn {
+      display: inline-block; padding: 10px 20px;
+      background: var(--blue); color: #fff;
+      font-size: 13.5px; font-weight: 500; font-family: 'Inter', sans-serif;
+      border-radius: 9px; text-decoration: none; white-space: nowrap;
+      transition: opacity .15s;
+    }
+    .contact-btn:hover { opacity: 0.85; }
+
+    /* ── FOOTER ── */
+    footer { border-top: 1px solid var(--border); padding: 36px var(--pad); background: var(--bg); }
+    .footer-inner { max-width: 1040px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 14px; }
+    .footer-logo { display: flex; align-items: center; gap: 8px; text-decoration: none; }
+    .footer-mark { width: 22px; height: 22px; background: var(--blue); border-radius: 5px; display: flex; align-items: center; justify-content: center; }
+    .footer-mark svg { width: 11px; height: 11px; }
+    .footer-name { font-family: 'Bricolage Grotesque', sans-serif; font-weight: 700; font-size: 14px; color: var(--text); letter-spacing: -0.03em; }
+    .footer-links { display: flex; gap: 20px; list-style: none; flex-wrap: wrap; }
+    .footer-links a { font-size: 13px; color: var(--muted); text-decoration: none; transition: color .15s; }
+    .footer-links a:hover { color: var(--text); }
+    .footer-copy { width: 100%; font-size: 12px; color: var(--faint); }
 
     @media (max-width: 600px) {
-      .hero { padding: 44px var(--pad) 40px; }
+      .page-hero { padding: 44px var(--pad) 40px; }
       .contact-card { text-align: center; justify-content: center; }
     }
   </style>
 </head>
 <body>
 
+<div class="scan-beam" aria-hidden="true"></div>
+
 <!-- NAV -->
 <nav>
-  <div class="nav-wrap">
+  <div class="nav-inner">
     <a href="/" class="nav-logo">
-      <div class="nav-logo-mark">
+      <div class="nav-mark">
         <svg viewBox="0 0 24 24" fill="none">
-          <!-- Corner bracket viewfinder -->
-          <path stroke="white" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round" d="M7.5 4 L4 4 L4 7.5 M16.5 4 L20 4 L20 7.5 M7.5 20 L4 20 L4 16.5 M16.5 20 L20 20 L20 16.5"/>
-          <!-- Barcode bars (9 bars: thick/thin/medium pattern) -->
+          <path stroke="white" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round" d="M7.5 4L4 4L4 7.5M16.5 4L20 4L20 7.5M7.5 20L4 20L4 16.5M16.5 20L20 20L20 16.5"/>
           <rect x="5.5" y="7.8" width="1.9" height="8.4" rx="0.3" fill="white"/>
           <rect x="7.6" y="8.7" width="0.7" height="6.6" rx="0.2" fill="white" opacity="0.82"/>
           <rect x="8.5" y="7.8" width="1.4" height="8.4" rx="0.3" fill="white"/>
@@ -114,17 +218,17 @@
           <rect x="16.5" y="7.8" width="1.9" height="8.4" rx="0.3" fill="white"/>
         </svg>
       </div>
-      <span class="nav-logo-name">LoadScan</span>
+      <span class="nav-wordmark">LoadScan</span>
     </a>
     <a href="/" class="nav-back">
-      <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M9 2L4 7L9 12" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
-      Back to home
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+      Back
     </a>
   </div>
 </nav>
 
 <!-- HERO -->
-<div class="hero">
+<div class="page-hero">
   <span class="hero-eyebrow">Support</span>
   <h1>Help & FAQ</h1>
   <p>Everything you need to get the most out of LoadScan.</p>
@@ -137,7 +241,6 @@
 <!-- MAIN -->
 <div class="page">
 
-  <!-- CATEGORY NAV -->
   <div class="cat-nav">
     <button class="cat-btn active" onclick="filterCat('all', this)">All</button>
     <button class="cat-btn" onclick="filterCat('scanning', this)">Scanning</button>
@@ -149,14 +252,14 @@
 
   <div id="no-results" class="no-results">
     <svg width="40" height="40" viewBox="0 0 40 40" fill="none"><circle cx="18" cy="18" r="11" stroke="#9CA3AF" stroke-width="2"/><path d="M27 27L35 35" stroke="#9CA3AF" stroke-width="2" stroke-linecap="round"/></svg>
-    <p>No results for that search. Try different keywords or <a href="mailto:support@load-scan.com" style="color:var(--blue)">contact support</a>.</p>
+    <p>No results. Try different keywords or <a href="mailto:support@load-scan.com">contact support</a>.</p>
   </div>
 
   <!-- SCANNING -->
   <div class="section" data-cat="scanning">
     <div class="section-header">
-      <div class="section-icon" style="background:#EFF6FF;">
-        <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M2 5V3a1 1 0 011-1h2M13 2h2a1 1 0 011 1v2M16 13v2a1 1 0 01-1 1h-2M5 16H3a1 1 0 01-1-1v-2" stroke="#2550DB" stroke-width="1.6" stroke-linecap="round"/><circle cx="9" cy="9" r="2.5" stroke="#2550DB" stroke-width="1.6"/></svg>
+      <div class="section-icon">
+        <svg width="16" height="16" viewBox="0 0 18 18" fill="none"><path d="M2 5V3a1 1 0 011-1h2M13 2h2a1 1 0 011 1v2M16 13v2a1 1 0 01-1 1h-2M5 16H3a1 1 0 01-1-1v-2" stroke="#7AA0FF" stroke-width="1.6" stroke-linecap="round"/><circle cx="9" cy="9" r="2.5" stroke="#7AA0FF" stroke-width="1.6"/></svg>
       </div>
       <span class="section-title">Scanning Appliances</span>
     </div>
@@ -210,8 +313,8 @@
   <!-- MANIFESTS -->
   <div class="section" data-cat="manifests">
     <div class="section-header">
-      <div class="section-icon" style="background:#F0FDF4;">
-        <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><rect x="3" y="2" width="12" height="14" rx="2" stroke="#16A34A" stroke-width="1.6"/><path d="M6 6h6M6 9h6M6 12h4" stroke="#16A34A" stroke-width="1.6" stroke-linecap="round"/></svg>
+      <div class="section-icon">
+        <svg width="16" height="16" viewBox="0 0 18 18" fill="none"><rect x="3" y="2" width="12" height="14" rx="2" stroke="#7AA0FF" stroke-width="1.6"/><path d="M6 6h6M6 9h6M6 12h4" stroke="#7AA0FF" stroke-width="1.6" stroke-linecap="round"/></svg>
       </div>
       <span class="section-title">Manifests</span>
     </div>
@@ -278,8 +381,8 @@
   <!-- ACCOUNT -->
   <div class="section" data-cat="account">
     <div class="section-header">
-      <div class="section-icon" style="background:#FFF7ED;">
-        <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><circle cx="9" cy="6.5" r="3" stroke="#EA580C" stroke-width="1.6"/><path d="M3 15c0-3.314 2.686-5 6-5s6 1.686 6 5" stroke="#EA580C" stroke-width="1.6" stroke-linecap="round"/></svg>
+      <div class="section-icon">
+        <svg width="16" height="16" viewBox="0 0 18 18" fill="none"><circle cx="9" cy="6.5" r="3" stroke="#7AA0FF" stroke-width="1.6"/><path d="M3 15c0-3.314 2.686-5 6-5s6 1.686 6 5" stroke="#7AA0FF" stroke-width="1.6" stroke-linecap="round"/></svg>
       </div>
       <span class="section-title">Account</span>
     </div>
@@ -336,8 +439,8 @@
   <!-- BILLING -->
   <div class="section" data-cat="billing">
     <div class="section-header">
-      <div class="section-icon" style="background:#FDF4FF;">
-        <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><rect x="2" y="5" width="14" height="10" rx="2" stroke="#9333EA" stroke-width="1.6"/><path d="M2 8h14" stroke="#9333EA" stroke-width="1.6"/><path d="M5 12h2M9 12h4" stroke="#9333EA" stroke-width="1.6" stroke-linecap="round"/></svg>
+      <div class="section-icon">
+        <svg width="16" height="16" viewBox="0 0 18 18" fill="none"><rect x="2" y="5" width="14" height="10" rx="2" stroke="#7AA0FF" stroke-width="1.6"/><path d="M2 8h14" stroke="#7AA0FF" stroke-width="1.6"/><path d="M5 12h2M9 12h4" stroke="#7AA0FF" stroke-width="1.6" stroke-linecap="round"/></svg>
       </div>
       <span class="section-title">Billing & Plans</span>
     </div>
@@ -386,8 +489,8 @@
   <!-- TEAMS -->
   <div class="section" data-cat="teams">
     <div class="section-header">
-      <div class="section-icon" style="background:#F0FDF4;">
-        <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><circle cx="6.5" cy="6" r="2.5" stroke="#16A34A" stroke-width="1.6"/><circle cx="12" cy="6" r="2.5" stroke="#16A34A" stroke-width="1.6"/><path d="M1 15c0-2.761 2.462-4.5 5.5-4.5M17 15c0-2.761-2.238-4.5-5-4.5M9.25 15c0-2.485 1.678-4 4.25-4" stroke="#16A34A" stroke-width="1.6" stroke-linecap="round"/></svg>
+      <div class="section-icon">
+        <svg width="16" height="16" viewBox="0 0 18 18" fill="none"><circle cx="6.5" cy="6" r="2.5" stroke="#7AA0FF" stroke-width="1.6"/><circle cx="12" cy="6" r="2.5" stroke="#7AA0FF" stroke-width="1.6"/><path d="M1 15c0-2.761 2.462-4.5 5.5-4.5M17 15c0-2.761-2.238-4.5-5-4.5M9.25 15c0-2.485 1.678-4 4.25-4" stroke="#7AA0FF" stroke-width="1.6" stroke-linecap="round"/></svg>
       </div>
       <span class="section-title">Teams & Enterprise</span>
     </div>
@@ -440,13 +543,36 @@
     <a href="mailto:support@load-scan.com" class="contact-btn">Email Support</a>
   </div>
 
-</div><!-- /page -->
+</div>
+
+<footer>
+  <div class="footer-inner">
+    <a href="/" class="footer-logo">
+      <div class="footer-mark">
+        <svg viewBox="0 0 24 24" fill="none">
+          <path stroke="white" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round" d="M7.5 4L4 4L4 7.5M16.5 4L20 4L20 7.5M7.5 20L4 20L4 16.5M16.5 20L20 20L20 16.5"/>
+          <rect x="8" y="8" width="1.6" height="8" rx="0.3" fill="white"/>
+          <rect x="10" y="9" width="0.7" height="6" rx="0.2" fill="white" opacity="0.8"/>
+          <rect x="11" y="8" width="1.2" height="8" rx="0.3" fill="white"/>
+          <rect x="12.6" y="9" width="0.7" height="6" rx="0.2" fill="white" opacity="0.8"/>
+          <rect x="13.6" y="8" width="1.6" height="8" rx="0.3" fill="white"/>
+        </svg>
+      </div>
+      <span class="footer-name">LoadScan</span>
+    </a>
+    <ul class="footer-links">
+      <li><a href="privacy.html">Privacy</a></li>
+      <li><a href="terms.html">Terms</a></li>
+      <li><a href="help.html">Help</a></li>
+      <li><a href="mailto:support@load-scan.com">Support</a></li>
+    </ul>
+    <p class="footer-copy">© 2026 LoadScan. All rights reserved.</p>
+  </div>
+</footer>
 
 <script>
-  // Accordion
   function toggle(btn) {
     const isOpen = btn.classList.contains('open');
-    // Close all
     document.querySelectorAll('.accordion-q.open').forEach(b => {
       b.classList.remove('open');
       b.nextElementSibling.classList.remove('open');
@@ -457,7 +583,6 @@
     }
   }
 
-  // Category filter
   function filterCat(cat, btn) {
     document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('active'));
     btn.classList.add('active');
@@ -468,7 +593,6 @@
     document.getElementById('search-input').value = '';
   }
 
-  // Search
   document.getElementById('search-input').addEventListener('input', function() {
     const q = this.value.trim().toLowerCase();
     if (!q) {
@@ -479,9 +603,7 @@
       document.querySelector('.cat-btn').classList.add('active');
       return;
     }
-    // Reset category
     document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('active'));
-
     let anyVisible = false;
     document.querySelectorAll('.section').forEach(s => {
       let sectionHasMatch = false;
@@ -494,7 +616,6 @@
       s.style.display = sectionHasMatch ? '' : 'none';
       if (sectionHasMatch) anyVisible = true;
     });
-
     document.getElementById('no-results').style.display = anyVisible ? 'none' : 'block';
   });
 </script>
