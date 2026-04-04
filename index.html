@@ -3,17 +3,17 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>LoadScan — Faster Appliance Intake for iPhone</title>
-  <meta name="description" content="Save time on appliance intake. Scan stickers, capture model details, and build load manifests faster on iPhone with LoadScan." />
+  <title>LoadScan — Inventory, Loads, and Seller Mode for Appliance Sellers</title>
+  <meta name="description" content="Run appliance inventory and loads from one app. Scan units, track stock, build loads faster, and see what is selling with LoadScan for iPhone." />
   <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://load-scan.com/" />
-  <meta property="og:title" content="LoadScan — Faster Appliance Intake for iPhone" />
-  <meta property="og:description" content="Scan stickers, capture model details, and build load manifests faster with LoadScan." />
+  <meta property="og:title" content="LoadScan — Inventory, Loads, and Seller Mode for Appliance Sellers" />
+  <meta property="og:description" content="Scan units, track stock, build loads faster, and see what is selling with LoadScan on iPhone." />
   <meta property="og:image" content="https://load-scan.com/og-image.png" />
   <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="LoadScan — Faster Appliance Intake for iPhone" />
-  <meta name="twitter:description" content="Scan stickers, capture model details, and build load manifests faster with LoadScan." />
+  <meta name="twitter:title" content="LoadScan — Inventory, Loads, and Seller Mode for Appliance Sellers" />
+  <meta name="twitter:description" content="Scan units, track stock, build loads faster, and see what is selling with LoadScan on iPhone." />
   <meta name="twitter:image" content="https://load-scan.com/og-image.png" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -101,25 +101,92 @@
     .nav-logo { display: flex; align-items: center; gap: 9px; text-decoration: none; }
     .nav-mark {
       width: 28px; height: 28px; border-radius: 7px;
-      background: var(--blue);
       display: flex; align-items: center; justify-content: center;
     }
-    .nav-mark svg { width: 15px; height: 15px; }
+    .nav-mark img { width: 100%; height: 100%; display: block; }
     .nav-wordmark { font-family: 'Bricolage Grotesque', sans-serif; font-weight: 700; font-size: 16px; color: var(--text); letter-spacing: -0.03em; }
     .nav-links { display: flex; align-items: center; gap: 2px; }
     .nav-link { font-size: 13.5px; color: var(--muted); text-decoration: none; padding: 6px 12px; border-radius: 7px; transition: color .15s, background .15s; }
     .nav-link:hover { color: var(--text); background: rgba(255,255,255,0.05); }
     .nav-dl {
-      font-size: 13px; font-weight: 500; color: #fff;
-      background: var(--blue); padding: 7px 16px; border-radius: 8px;
-      text-decoration: none; margin-left: 6px;
-      transition: opacity .15s;
+      margin-left: 8px;
     }
-    .nav-dl:hover { opacity: 0.85; }
+    .glass-btn {
+      position: relative;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      border-radius: 999px;
+      background: #fff;
+      color: #111827;
+      text-decoration: none;
+      isolation: isolate;
+      border: 1px solid rgba(255,255,255,0.42);
+      box-shadow:
+        0 16px 34px rgba(0,0,0,0.22),
+        0 2px 0 rgba(255,255,255,0.65) inset,
+        0 -1px 0 rgba(17,24,39,0.08) inset;
+      transition: transform .2s ease, box-shadow .2s ease, background .2s ease;
+    }
+    .glass-btn:hover {
+      transform: translateY(-1px);
+      background: rgba(255,255,255,0.96);
+      box-shadow:
+        0 20px 38px rgba(0,0,0,0.26),
+        0 2px 0 rgba(255,255,255,0.72) inset,
+        0 -1px 0 rgba(17,24,39,0.08) inset;
+    }
+    .glass-btn-shell,
+    .glass-btn-filter,
+    .glass-btn-highlight {
+      display: none;
+    }
+    .glass-btn-content {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 100%;
+      padding: 0 18px;
+    }
+    .glass-btn-text {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+      text-align: center;
+      color: #111827;
+    }
+    .glass-btn-label {
+      font-family: 'Bricolage Grotesque', sans-serif;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      line-height: 1.05;
+    }
+    .glass-btn-sub {
+      font-size: 9.5px;
+      font-weight: 500;
+      letter-spacing: 0.08em;
+      opacity: 0.56;
+      text-transform: uppercase;
+      margin-bottom: 2px;
+    }
+    .glass-btn.nav-dl {
+      min-height: 40px;
+      min-width: 120px;
+    }
+    .nav-dl .glass-btn-content {
+      padding: 0 14px;
+    }
+    .nav-dl .glass-btn-label {
+      font-size: 13px;
+      font-weight: 600;
+    }
 
     /* ── HERO ── */
     .hero {
-      padding: 120px var(--pad) 80px;
+      padding: 116px var(--pad) 72px;
       text-align: center;
     }
     .hero-inner { max-width: 620px; margin: 0 auto; }
@@ -146,15 +213,13 @@
     .hero-actions { display: flex; align-items: center; justify-content: center; gap: 12px; flex-wrap: wrap; }
 
     .btn-primary {
-      display: inline-flex; align-items: center; gap: 10px;
-      background: var(--text); color: var(--bg);
-      padding: 12px 20px; border-radius: 11px; text-decoration: none;
-      transition: opacity .15s, transform .15s;
+      min-height: 56px;
+      min-width: 220px;
     }
-    .btn-primary:hover { opacity: 0.9; transform: translateY(-1px); }
-    .btn-primary svg { width: 20px; height: 20px; flex-shrink: 0; }
-    .btn-primary-text { display: flex; flex-direction: column; gap: 0; text-align: left; }
-    .btn-primary-sub { font-size: 9.5px; font-weight: 400; opacity: .55; letter-spacing: 0.04em; }
+    .btn-primary .glass-btn-content {
+      padding: 0 22px;
+    }
+    .btn-primary-sub { font-size: 9.5px; font-weight: 500; opacity: .68; letter-spacing: 0.06em; text-transform: uppercase; }
     .btn-primary-label { font-family: 'Bricolage Grotesque', sans-serif; font-weight: 700; font-size: 14.5px; letter-spacing: -0.02em; }
 
     .btn-secondary {
@@ -169,62 +234,19 @@
       margin-top: 18px; font-size: 12px; color: var(--faint);
     }
 
-    /* ── SCREENSHOTS ── */
-    .screenshots-section {
-      padding: 40px var(--pad) 80px;
-    }
-    .screenshots-grid {
-      max-width: var(--max); margin: 0 auto;
-      display: flex; align-items: flex-end; justify-content: center;
-      gap: 14px;
-    }
-    .sc {
-      width: 260px; flex-shrink: 0;
-      border-radius: 32px;
-      box-shadow: 0 24px 56px rgba(0,0,0,0.55);
-      display: block;
-      transition: transform .35s ease, box-shadow .35s ease;
-    }
-    .sc-side {
-      width: 228px;
-      opacity: 0.88;
-    }
-    .sc-center {
-      transform: translateY(-28px);
-      box-shadow: 0 32px 72px rgba(0,0,0,0.65);
-    }
-    .sc:hover {
-      transform: translateY(-8px);
-      opacity: 1;
-      box-shadow: 0 32px 64px rgba(0,0,0,0.65);
-    }
-    .sc-center:hover { transform: translateY(-36px); }
-
     /* ── DIVIDER ── */
     hr.divide {
       border: none; border-top: 1px solid var(--border);
       max-width: var(--max); margin: 0 auto;
     }
 
-    /* ── VIDEO ── */
-    .video-section {
-      padding: 80px var(--pad);
-      max-width: var(--max); margin: 0 auto;
+    /* ── SHOWCASE ── */
+    .seller-showcase-shell {
+      padding: 18px var(--pad) 84px;
     }
-    .video-label {
-      text-align: center;
-      font-size: 12px; font-weight: 500; letter-spacing: 0.08em;
-      color: rgba(240,242,247,0.75); text-transform: uppercase;
-      margin-bottom: 24px;
-    }
-    .video-wrap {
-      max-width: 700px; margin: 0 auto;
-      border-radius: 14px; overflow: hidden;
-      border: 1px solid var(--border);
-      background: var(--surface);
-    }
-    .video-wrap video {
-      width: 100%; display: block;
+    .seller-showcase-inner {
+      max-width: 1160px;
+      margin: 0 auto;
     }
 
     /* ── FEATURES ── */
@@ -280,8 +302,8 @@
       flex-wrap: wrap; gap: 14px;
     }
     .footer-logo { display: flex; align-items: center; gap: 8px; text-decoration: none; }
-    .footer-mark { width: 22px; height: 22px; background: var(--blue); border-radius: 5px; display: flex; align-items: center; justify-content: center; }
-    .footer-mark svg { width: 11px; height: 11px; }
+    .footer-mark { width: 22px; height: 22px; display: flex; align-items: center; justify-content: center; }
+    .footer-mark img { width: 100%; height: 100%; display: block; }
     .footer-name { font-family: 'Bricolage Grotesque', sans-serif; font-weight: 700; font-size: 14px; color: var(--text); letter-spacing: -0.03em; }
     .footer-links { display: flex; gap: 20px; list-style: none; flex-wrap: wrap; }
     .footer-links a { font-size: 13px; color: var(--muted); text-decoration: none; transition: color .15s; }
@@ -290,49 +312,116 @@
 
     /* ── RESPONSIVE ── */
     @media (max-width: 720px) {
-      .sc-side { display: none; }
-      .sc-center { width: 260px; transform: none; }
-      .sc-center:hover { transform: translateY(-8px); }
+      :root {
+        --pad: 18px;
+      }
+      .nav-inner {
+        height: 64px;
+        padding: 0 18px;
+      }
+      .nav-wordmark {
+        font-size: 15px;
+      }
+      .glass-btn.nav-dl {
+        min-width: 104px;
+        min-height: 38px;
+      }
+      .nav-dl .glass-btn-content {
+        padding: 0 12px;
+      }
+      .nav-dl .glass-btn-label {
+        font-size: 12.5px;
+      }
       .hero h1 { font-size: 36px; }
       .hero-sub { font-size: 15.5px; }
+      .hero {
+        padding-top: 108px;
+        padding-bottom: 52px;
+      }
+      .hero-label {
+        margin-bottom: 18px;
+      }
+      .hero-actions {
+        gap: 10px;
+      }
+      .btn-primary {
+        min-height: 54px;
+      }
+      .seller-showcase-shell {
+        padding-top: 10px;
+        padding-bottom: 64px;
+      }
       .feat { grid-template-columns: 32px 1fr; grid-template-rows: auto auto; gap: 0 20px; }
       .feat p { grid-column: 2; margin-top: 8px; }
       nav .nav-link { display: none; }
+      .nav-dl { margin-left: 0; }
       .cta-section h2 { font-size: 30px; }
     }
     @media (max-width: 480px) {
       .hero h1 { font-size: 30px; }
+      .hero-sub {
+        font-size: 15px;
+        line-height: 1.65;
+        margin-bottom: 28px;
+      }
+      .btn-primary {
+        width: 100%;
+        max-width: 300px;
+      }
+      .btn-primary .glass-btn-content {
+        padding: 0 18px;
+      }
+      .btn-primary-label {
+        font-size: 14px;
+      }
+      .features-section,
+      .cta-section {
+        padding-left: 18px;
+        padding-right: 18px;
+      }
     }
   </style>
+  <link rel="stylesheet" href="/beams-background.css" />
+  <script src="/beams-background.js" defer></script>
 </head>
-<body>
+<body class="loadscan-beams" data-beams-theme="dark" data-beams-intensity="medium">
 
 <div class="scan-beam" aria-hidden="true"></div>
+
+<svg class="hidden" aria-hidden="true" focusable="false" style="position:absolute;width:0;height:0;overflow:hidden">
+  <defs>
+    <filter id="homepage-liquid-glass" x="0%" y="0%" width="100%" height="100%" color-interpolation-filters="sRGB">
+      <feTurbulence type="fractalNoise" baseFrequency="0.05 0.05" numOctaves="1" seed="1" result="turbulence"></feTurbulence>
+      <feGaussianBlur in="turbulence" stdDeviation="2" result="blurredNoise"></feGaussianBlur>
+      <feDisplacementMap in="SourceGraphic" in2="blurredNoise" scale="70" xChannelSelector="R" yChannelSelector="B" result="displaced"></feDisplacementMap>
+      <feGaussianBlur in="displaced" stdDeviation="4" result="finalBlur"></feGaussianBlur>
+      <feComposite in="finalBlur" in2="finalBlur" operator="over"></feComposite>
+    </filter>
+  </defs>
+</svg>
 
 <!-- NAV -->
 <nav>
   <div class="nav-inner">
     <a href="/" class="nav-logo">
       <div class="nav-mark">
-        <svg viewBox="0 0 24 24" fill="none">
-          <path stroke="white" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round" d="M7.5 4L4 4L4 7.5M16.5 4L20 4L20 7.5M7.5 20L4 20L4 16.5M16.5 20L20 20L20 16.5"/>
-          <rect x="5.5" y="7.8" width="1.9" height="8.4" rx="0.3" fill="white"/>
-          <rect x="7.6" y="8.7" width="0.7" height="6.6" rx="0.2" fill="white" opacity="0.82"/>
-          <rect x="8.5" y="7.8" width="1.4" height="8.4" rx="0.3" fill="white"/>
-          <rect x="10.1" y="8.7" width="0.7" height="6.6" rx="0.2" fill="white" opacity="0.82"/>
-          <rect x="11.0" y="7.8" width="1.9" height="8.4" rx="0.3" fill="white"/>
-          <rect x="13.1" y="8.7" width="0.7" height="6.6" rx="0.2" fill="white" opacity="0.82"/>
-          <rect x="14.0" y="7.8" width="1.4" height="8.4" rx="0.3" fill="white"/>
-          <rect x="15.6" y="8.7" width="0.7" height="6.6" rx="0.2" fill="white" opacity="0.82"/>
-          <rect x="16.5" y="7.8" width="1.9" height="8.4" rx="0.3" fill="white"/>
-        </svg>
+        <img src="/favicon.svg" alt="" />
       </div>
       <span class="nav-wordmark">LoadScan</span>
     </a>
     <div class="nav-links">
       <a href="#features" class="nav-link">Features</a>
       <a href="privacy.html" class="nav-link">Privacy</a>
-      <a href="https://apps.apple.com/us/app/loadscan/id6760682388" class="nav-dl">Download</a>
+      <a href="https://apps.apple.com/us/app/loadscan/id6760682388" class="nav-dl glass-btn">
+        <span class="glass-btn-shell"></span>
+        <span class="glass-btn-filter" style="backdrop-filter:url('#homepage-liquid-glass');-webkit-backdrop-filter:blur(18px) saturate(160%);"></span>
+        <span class="glass-btn-highlight"></span>
+        <span class="glass-btn-content">
+          <span class="glass-btn-text">
+            <span class="glass-btn-label">Download</span>
+          </span>
+        </span>
+      </a>
     </div>
   </div>
 </nav>
@@ -340,38 +429,30 @@
 <!-- HERO -->
 <section class="hero">
   <div class="hero-inner">
-    <span class="hero-label">iPhone · Appliance Resellers</span>
-    <h1>Save hours on every load you intake.</h1>
-    <p class="hero-sub">Scan appliance stickers, build load manifests, and price inventory — all from your iPhone. No spreadsheets.</p>
+    <span class="hero-label">iPhone · Appliance Sellers</span>
+    <h1>Run your appliance inventory and loads from one app.</h1>
+    <p class="hero-sub">Scan units, track stock, build loads faster, and see what is selling — without spreadsheets or manual manifest work.</p>
     <div class="hero-actions">
-      <a href="https://apps.apple.com/us/app/loadscan/id6760682388" class="btn-primary">
-        <svg viewBox="0 0 24 24" fill="black"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg>
-        <div class="btn-primary-text">
-          <span class="btn-primary-sub">Download on the</span>
-          <span class="btn-primary-label">App Store</span>
-        </div>
+      <a href="https://apps.apple.com/us/app/loadscan/id6760682388" class="btn-primary glass-btn">
+        <span class="glass-btn-shell"></span>
+        <span class="glass-btn-filter" style="backdrop-filter:url('#homepage-liquid-glass');-webkit-backdrop-filter:blur(18px) saturate(160%);"></span>
+        <span class="glass-btn-highlight"></span>
+        <span class="glass-btn-content">
+          <span class="glass-btn-text">
+            <span class="glass-btn-sub">Download on the</span>
+            <span class="glass-btn-label btn-primary-label">App Store</span>
+          </span>
+        </span>
       </a>
     </div>
     <p class="hero-note">Free to download · Memberships available</p>
   </div>
 </section>
 
-<!-- SCREENSHOTS -->
-<div class="screenshots-section">
-  <div class="screenshots-grid">
-    <img src="screenshot-1.png" alt="LoadScan — Track Loads and Inventory" class="sc sc-side" />
-    <img src="screenshot-2.png" alt="LoadScan — New Load Manifest" class="sc sc-center" />
-    <img src="screenshot-3.png" alt="LoadScan — Inventory Dashboard" class="sc sc-side" />
-  </div>
-</div>
-
-<hr class="divide" />
-
-<!-- VIDEO -->
-<section class="video-section" id="demo">
-  <p class="video-label">Product demo</p>
-  <div class="video-wrap">
-    <video src="loadscan-demo-v2.mp4" controls playsinline preload="metadata"></video>
+<!-- SHOWCASE -->
+<section class="seller-showcase-shell" id="demo">
+  <div class="seller-showcase-inner">
+    <div id="seller-mode-showcase-root"></div>
   </div>
 </section>
 
@@ -382,17 +463,17 @@
   <div class="feat">
     <span class="feat-num">01</span>
     <h3>Scan any appliance sticker</h3>
-    <p>Point your camera at the label. LoadScan reads the model number and logs it to your current load — no typing required.</p>
+    <p>Point your camera at the label and move the unit straight into Seller Mode with the model, brand, and category already captured.</p>
   </div>
   <div class="feat">
     <span class="feat-num">02</span>
-    <h3>Price the load, not each item</h3>
-    <p>Enter your total load cost and target margin. LoadScan distributes pricing across the whole manifest automatically.</p>
+    <h3>Stock units and build loads faster</h3>
+    <p>Keep inventory live, reserve available units, and turn grouped stock into a quick load without rebuilding everything by hand.</p>
   </div>
   <div class="feat">
     <span class="feat-num">03</span>
-    <h3>Track inventory in one place</h3>
-    <p>Stock value, load history, and item counts — visible at a glance without bouncing between notes and spreadsheets.</p>
+    <h3>Track what is actually moving</h3>
+    <p>See in-stock, listed, reserved, sold, and aging inventory in one workflow so appliance sellers can buy and price with more clarity.</p>
   </div>
 </section>
 
@@ -401,14 +482,18 @@
 <!-- CTA -->
 <section class="cta-section">
   <div class="cta-inner">
-    <h2>Start your next load the right way.</h2>
-    <p>Download LoadScan and run a faster intake session today.</p>
-    <a href="https://apps.apple.com/us/app/loadscan/id6760682388" class="btn-primary" style="margin: 0 auto; display: inline-flex;">
-      <svg viewBox="0 0 24 24" fill="black"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg>
-      <div class="btn-primary-text">
-        <span class="btn-primary-sub">Download on the</span>
-        <span class="btn-primary-label">App Store</span>
-      </div>
+    <h2>Scan it. Stock it. Build the load.</h2>
+    <p>Download LoadScan and start running inventory, seller intake, and outgoing loads from one iPhone workflow.</p>
+    <a href="https://apps.apple.com/us/app/loadscan/id6760682388" class="btn-primary glass-btn" style="margin: 0 auto; display: inline-flex;">
+      <span class="glass-btn-shell"></span>
+      <span class="glass-btn-filter" style="backdrop-filter:url('#homepage-liquid-glass');-webkit-backdrop-filter:blur(18px) saturate(160%);"></span>
+      <span class="glass-btn-highlight"></span>
+      <span class="glass-btn-content">
+        <span class="glass-btn-text">
+          <span class="glass-btn-sub">Download on the</span>
+          <span class="glass-btn-label btn-primary-label">App Store</span>
+        </span>
+      </span>
     </a>
     <p class="cta-note">iPhone only · Free to download · Memberships available</p>
   </div>
@@ -419,14 +504,7 @@
   <div class="footer-inner">
     <a href="/" class="footer-logo">
       <div class="footer-mark">
-        <svg viewBox="0 0 24 24" fill="none">
-          <path stroke="white" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round" d="M7.5 4L4 4L4 7.5M16.5 4L20 4L20 7.5M7.5 20L4 20L4 16.5M16.5 20L20 20L20 16.5"/>
-          <rect x="8" y="8" width="1.6" height="8" rx="0.3" fill="white"/>
-          <rect x="10" y="9" width="0.7" height="6" rx="0.2" fill="white" opacity="0.8"/>
-          <rect x="11" y="8" width="1.2" height="8" rx="0.3" fill="white"/>
-          <rect x="12.6" y="9" width="0.7" height="6" rx="0.2" fill="white" opacity="0.8"/>
-          <rect x="13.6" y="8" width="1.6" height="8" rx="0.3" fill="white"/>
-        </svg>
+        <img src="/favicon.svg" alt="" />
       </div>
       <span class="footer-name">LoadScan</span>
     </a>

@@ -1,18 +1,16 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
   <defs>
     <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
-      <stop offset="0%" stop-color="#2556DB"/>
-      <stop offset="100%" stop-color="#1540B0"/>
+      <stop offset="0%" stop-color="#5C6470"/>
+      <stop offset="100%" stop-color="#191D24"/>
     </linearGradient>
   </defs>
   <rect width="32" height="32" rx="7" fill="url(#bg)"/>
-  <!-- Corner brackets -->
   <path stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" fill="none"
     d="M10 5.5 L5.5 5.5 L5.5 10
        M22 5.5 L26.5 5.5 L26.5 10
        M10 26.5 L5.5 26.5 L5.5 22
        M22 26.5 L26.5 26.5 L26.5 22"/>
-  <!-- Barcode bars -->
   <rect x="7.5"  y="11.5" width="2.6" height="9"   rx="0.5" fill="white"/>
   <rect x="10.4" y="12.7" width="0.9" height="6.6" rx="0.3" fill="white" opacity="0.82"/>
   <rect x="11.5" y="11.5" width="1.9" height="9"   rx="0.4" fill="white"/>

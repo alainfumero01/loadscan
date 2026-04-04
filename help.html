@@ -59,8 +59,8 @@
       height: 58px; display: flex; align-items: center; justify-content: space-between;
     }
     .nav-logo { display: flex; align-items: center; gap: 9px; text-decoration: none; }
-    .nav-mark { width: 28px; height: 28px; background: var(--blue); border-radius: 7px; display: flex; align-items: center; justify-content: center; }
-    .nav-mark svg { width: 15px; height: 15px; }
+    .nav-mark { width: 28px; height: 28px; display: flex; align-items: center; justify-content: center; }
+    .nav-mark img { width: 100%; height: 100%; display: block; }
     .nav-wordmark { font-family: 'Bricolage Grotesque', sans-serif; font-weight: 700; font-size: 16px; color: var(--text); letter-spacing: -0.03em; }
     .nav-back {
       font-size: 13.5px; font-weight: 500; color: var(--muted); text-decoration: none;
@@ -182,8 +182,8 @@
     footer { border-top: 1px solid var(--border); padding: 36px var(--pad); background: var(--bg); }
     .footer-inner { max-width: 1040px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 14px; }
     .footer-logo { display: flex; align-items: center; gap: 8px; text-decoration: none; }
-    .footer-mark { width: 22px; height: 22px; background: var(--blue); border-radius: 5px; display: flex; align-items: center; justify-content: center; }
-    .footer-mark svg { width: 11px; height: 11px; }
+    .footer-mark { width: 22px; height: 22px; display: flex; align-items: center; justify-content: center; }
+    .footer-mark img { width: 100%; height: 100%; display: block; }
     .footer-name { font-family: 'Bricolage Grotesque', sans-serif; font-weight: 700; font-size: 14px; color: var(--text); letter-spacing: -0.03em; }
     .footer-links { display: flex; gap: 20px; list-style: none; flex-wrap: wrap; }
     .footer-links a { font-size: 13px; color: var(--muted); text-decoration: none; transition: color .15s; }
@@ -195,8 +195,10 @@
       .contact-card { text-align: center; justify-content: center; }
     }
   </style>
+  <link rel="stylesheet" href="/beams-background.css" />
+  <script src="/beams-background.js" defer></script>
 </head>
-<body>
+<body class="loadscan-beams" data-beams-theme="dark" data-beams-intensity="medium">
 
 <div class="scan-beam" aria-hidden="true"></div>
 
@@ -205,18 +207,7 @@
   <div class="nav-inner">
     <a href="/" class="nav-logo">
       <div class="nav-mark">
-        <svg viewBox="0 0 24 24" fill="none">
-          <path stroke="white" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round" d="M7.5 4L4 4L4 7.5M16.5 4L20 4L20 7.5M7.5 20L4 20L4 16.5M16.5 20L20 20L20 16.5"/>
-          <rect x="5.5" y="7.8" width="1.9" height="8.4" rx="0.3" fill="white"/>
-          <rect x="7.6" y="8.7" width="0.7" height="6.6" rx="0.2" fill="white" opacity="0.82"/>
-          <rect x="8.5" y="7.8" width="1.4" height="8.4" rx="0.3" fill="white"/>
-          <rect x="10.1" y="8.7" width="0.7" height="6.6" rx="0.2" fill="white" opacity="0.82"/>
-          <rect x="11.0" y="7.8" width="1.9" height="8.4" rx="0.3" fill="white"/>
-          <rect x="13.1" y="8.7" width="0.7" height="6.6" rx="0.2" fill="white" opacity="0.82"/>
-          <rect x="14.0" y="7.8" width="1.4" height="8.4" rx="0.3" fill="white"/>
-          <rect x="15.6" y="8.7" width="0.7" height="6.6" rx="0.2" fill="white" opacity="0.82"/>
-          <rect x="16.5" y="7.8" width="1.9" height="8.4" rx="0.3" fill="white"/>
-        </svg>
+        <img src="/favicon.svg" alt="" />
       </div>
       <span class="nav-wordmark">LoadScan</span>
     </a>
@@ -549,14 +540,7 @@
   <div class="footer-inner">
     <a href="/" class="footer-logo">
       <div class="footer-mark">
-        <svg viewBox="0 0 24 24" fill="none">
-          <path stroke="white" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round" d="M7.5 4L4 4L4 7.5M16.5 4L20 4L20 7.5M7.5 20L4 20L4 16.5M16.5 20L20 20L20 16.5"/>
-          <rect x="8" y="8" width="1.6" height="8" rx="0.3" fill="white"/>
-          <rect x="10" y="9" width="0.7" height="6" rx="0.2" fill="white" opacity="0.8"/>
-          <rect x="11" y="8" width="1.2" height="8" rx="0.3" fill="white"/>
-          <rect x="12.6" y="9" width="0.7" height="6" rx="0.2" fill="white" opacity="0.8"/>
-          <rect x="13.6" y="8" width="1.6" height="8" rx="0.3" fill="white"/>
-        </svg>
+        <img src="/favicon.svg" alt="" />
       </div>
       <span class="footer-name">LoadScan</span>
     </a>
